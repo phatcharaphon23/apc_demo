@@ -33,6 +33,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSort } from '@angular/material/sort';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 import { FormsModule } from '@angular/forms';
 import { DialogAnimationsComponent } from './dashboard/dialog-animations/dialog-animations.component';
@@ -78,6 +79,7 @@ import { PrintPageComponent } from './dashboard/print-page/print-page.component'
     FormsModule,
     MatSlideToggleModule,
     MatSortModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent],

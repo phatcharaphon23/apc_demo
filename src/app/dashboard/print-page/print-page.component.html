@@ -53,51 +53,76 @@
       <p>BY : {{ jobData?.createdby }}</p>
     </div>
   </div>
-  <form [formGroup]="myGroup">
-    <div class="checbox-content">
-      <p>TYPE : {{ jobData?.jobtype }}</p>
-      <div class="row">
-        <div class="col">
-          <mat-checkbox formControlName="design"><p>DESIGN QTY</p></mat-checkbox>
-          <p>{{ jobData?.quantity }}</p>
-        </div>
-        <div class="col">
-          <mat-checkbox formControlName="compos_aw"
-            ><p>COMPOSING A/W</p></mat-checkbox
-          >
-        </div>
-        <div class="col">
-          <mat-checkbox formControlName="ready_aw"
-            ><p>READY MADE A/W</p></mat-checkbox
-          >
-        </div>
-        <div class="col"></div>
-      </div>
-    </div>
-    <div></div>
-    <div class="checbox-content">
-      <div class="row">
-        <div class="col">
-          <mat-checkbox formControlName="urgent_normal"
-            ><p>URGENT A/W</p></mat-checkbox
-          >
-        </div>
-        <div class="col">
-          <mat-checkbox formControlName="urgent_aw"
-            ><p>URGENT FILM</p></mat-checkbox
-          >
-        </div>
-        <div class="col">
-          <mat-checkbox formControlName="urgent_film"><p>NORMAL</p></mat-checkbox>
-        </div>
-        <div class="col">
-          <mat-checkbox><p>CANCEL</p></mat-checkbox>
-        </div>
-      </div>
-    </div>
-  </form>
 
-  <div></div>
+  <div class="checkbox-container">
+    <div class="row">
+      <div class="col">
+        <input type="checkbox" [checked]="jobData?.design === 'Y'" disabled />
+        <label for="design">DESIGN</label>
+        <p>QUANTITY : [ {{ jobData?.quantity }} ]</p>
+      </div>
+      <div class="col">
+        <input
+          type="checkbox"
+          [checked]="jobData?.compos_aw === 'Y'"
+          disabled
+        />
+        <label for="compos_aw">COMPOSING A/W</label>
+      </div>
+      <div class="col">
+        <input type="checkbox" [checked]="jobData?.ready_aw === 'Y'" disabled />
+        <label for="ready_aw">READY MADE A/W</label>
+      </div>
+      <div class="col"></div>
+    </div>
+  </div>
+
+  <div class="checkbox-container">
+    <div class="row">
+      <div class="col">
+        <input
+          type="checkbox"
+          [checked]="jobData?.urgent_aw === true"
+          disabled
+        />
+        <label for="urgent_aw"
+          >URSIGNT A/W {{ jobData?.urgent_aw === true ? "X" : "" }}</label
+        >
+      </div>
+
+      <div class="col">
+        <input
+          type="checkbox"
+          [checked]="jobData?.urgent_film === true"
+          disabled
+        />
+        <label for="urgent_film"
+          >URGENT FILM
+          {{ jobData?.urgent_film === true ? "&#x2718;" : "" }}</label
+        >
+      </div>
+      <div class="col">
+        <input
+          type="checkbox"
+          [checked]="jobData?.urgent_normal === true"
+          disabled
+        />
+        <label for="urgent_normal"
+          >NORMAL {{ jobData?.urgent_normal === true ? "&#x2718;" : "" }}</label
+        >
+      </div>
+      <div class="col">
+        <input
+          type="checkbox"
+          [checked]="jobData?.cancel_by === true"
+          disabled
+        />
+        <label for="cancel_by"
+          >CANCEL {{ jobData?.cancel_by === true ? "&#x2718;" : "" }}</label
+        >
+      </div>
+    </div>
+  </div>
   <div class="row justify-content-md-center">
     <div class="col col-lg-2">
       <p>DATE :</p>
@@ -116,5 +141,4 @@
     </div>
   </div>
 
-  <div></div>
 </div>

@@ -1,0 +1,31 @@
+.cus_snackbar{
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.cus_snackbar .icon {
+  font-size: 25px;
+  margin-right: 12px;
+  margin-left: 12px;
+}
+
+.cus_snackbar .spacer {
+  flex-grow: 1;
+}
+
+.cus_snackbar button {
+  margin-left: 12px;
+}
+
+.cus_snackbar button .icon_button {
+  font-size: 18px;
+}
+
+.text-error {
+  color: var(--i-danger);
+}
+
+.text-success {
+  color: var(--i-success);
+}

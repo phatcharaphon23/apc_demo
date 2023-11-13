@@ -12,6 +12,7 @@ import { HttpService } from 'src/app/__service/http.service';
 import { JobUpdateService } from 'src/app/__service/job-update.service';
 import { Router } from '@angular/router';
 import { GetService } from 'src/app/__service/get.service';
+import { SnackService } from 'src/app/__service/snack.service';
 
 @Component({
   selector: 'app-test-addnew-job',
@@ -22,22 +23,32 @@ export class TestAddnewJobComponent {
   submitted: boolean = false;
   jobtypes: string[] = ['design quantity', 'composing a/w', 'ready made a/w'];
   operators: string[] = [];
-  filteredOperators: string[] = [];
-  requestOptions: any[] = [];
+  filteredOperators: { employee_id: string, username: string }[] = [];
+  selectedOperator: string = '';
+
+  requests: string[] = [];
+  filteredRequest: { employee_id: string, username: string }[] = [];
+  selectedRequest: string = '';
+
+  groups: string[] = [];
+  filteredGroups: { group_id: string, group_name: string }[] = [];
+  selectedGroup: string = '';
 
   constructor(
     private jobUpdateService: JobUpdateService,
     private http: HttpService,
     private getService: GetService,
+    private snackBar: SnackService,
     private dialogRef: MatDialogRef<TestAddnewJobComponent> // private datePipe: DatePipe,
   ) {}
+
   form = new FormGroup({
     jobspec: new FormControl('', [Validators.required]),
     dpcgroup: new FormControl('', [Validators.required]),
     status_order: new FormControl('New Order', [Validators.required]),
     working_date: new FormControl(new Date(), [Validators.required]),
     due_date: new FormControl(new Date(), [Validators.required]),
-    // createdby: new FormControl('Name Test', [Validators.required]),
+    createdby: new FormControl('Name Test', [Validators.required]),
     requestby: new FormControl('', [Validators.required]),
     operator_id: new FormControl('', [Validators.required]),
     urgent_aw: new FormControl(false),
@@ -53,19 +64,10 @@ export class TestAddnewJobComponent {
   });
 
   ngOnInit(): void {
+    this.getOperate();
+    this.getRequestby();
+    this.getGroup();
     const today = new Date();
-    this.getRequestOptions();
-  }
-
-  onOperatorInput(event: Event): void {
-    const input = (event.target as HTMLInputElement).value;
-    if (this.operators && this.operators.length > 0) {
-      this.filteredOperators = this.operators.filter(
-        (operator) =>
-          typeof operator === 'string' &&
-          operator.toLowerCase().includes(input.toLowerCase())
-      );
-    }
   }
 
   onSave() {
@@ -75,13 +77,16 @@ export class TestAddnewJobComponent {
     this.submitted = true;
 
     const jobspec = this.form.get('jobspec')?.value;
-    const dpcgroup = this.form.get('dpcgroup')?.value;
+    const dpcgroup =
+      this.selectedGroup || this.form.get('dpcgroup')?.value;
     const status_order = this.form.get('status_order')?.value;
     const createdby = this.form.get('createdby')?.value;
     const working_date = this.form.get('working_date')?.value;
     const due_date = this.form.get('due_date')?.value;
-    const requestby = this.form.get('requestby')?.value;
-    const operator_id = this.form.get('operator_id')?.value;
+    const requestby =
+      this.selectedRequest || this.form.get('requestby')?.value;
+    const operator_id =
+      this.selectedOperator || this.form.get('operator_id')?.value;
     const urgent_aw = this.form.get('urgent_aw')?.value;
     const urgent_film = this.form.get('urgent_film')?.value;
     const urgent_normal = this.form.get('urgent_normal')?.value;
@@ -117,7 +122,8 @@ export class TestAddnewJobComponent {
     this.http
       .POST('/api/add_dpc', body)
       .then((res: any) => {
-        console.log(res);
+        // console.log(res);
+        this.snackBar.CustomSnackBar('Add job successful', 3000, 'success');
         this.onClose();
       })
       .catch((err) => {
@@ -126,7 +132,6 @@ export class TestAddnewJobComponent {
       .finally(() => {
         this.submitted = false;
       });
-
   }
 
   selectjobType(jobtype: string) {
@@ -155,21 +160,65 @@ export class TestAddnewJobComponent {
         break;
     }
   }
-  async getRequestOptions() {
-    try {
-      const res = await this.getService.GET('/api/employee')
-      console.log(res);
-      if (Array.isArray(res)) {
-        this.requestOptions = res;
-      } else {
-        this.requestOptions = Object.values(res);
-      }
-    } catch (error) {
-      console.error('Error fetching data:', error);
+
+  // TODO function getOperate
+  getOperate() {
+    this.getService
+      .GET('/api/operators')
+      .then((res: any) => {
+        // console.log(res);
+        this.operators = res;
+        this.filteredOperators = res;
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+  onSelectOperator(operator: string | null): void {
+    if (operator !== null) {
+      this.selectedOperator = operator;
     }
   }
-  
-  
+
+  // TODO function getRequestby
+  getRequestby() {
+    this.getService
+      .GET('/api/requestby')
+      .then((res: any) => {
+        // console.log(res);
+        this.requests = res;
+        this.filteredRequest = res;
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+  onSelectRequest(request: string | null): void {
+    if (request !== null) {
+      this.selectedRequest = request;
+    }
+  }
+
+   // TODO function getGroup
+  getGroup() {
+    this.getService
+      .GET('/api/groupname')
+      .then((res: any) => {
+        // console.log(res);
+        this.groups = res;
+        this.filteredGroups = res;
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+  onSelectGroup(group: string | null): void {
+    if (group !== null) {
+      this.selectedGroup = group;
+    }
+  }
 
   onClose() {
     this.dialogRef.close();

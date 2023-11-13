@@ -10,7 +10,7 @@
       <mat-accordion displayMode="flat">
         <!-- TODO LIST Add-->
         <mat-expansion-panel
-          [disabled]="false"
+          [disabled]="true"
           [expanded]="showView"
           [hidden]="!showView"
           hideToggle
@@ -19,10 +19,7 @@
             <mat-panel-title>VIEW JOB</mat-panel-title>
           </mat-expansion-panel-header>
           <div>
-            <app-print-page
-              class="print-content"
-              [jobData]="jobData"
-            ></app-print-page>
+            <app-print-page [jobData]="jobData"></app-print-page>
             <app-invoice (controls)="onControls($event)"></app-invoice>
           </div>
         </mat-expansion-panel>
@@ -55,9 +52,15 @@
           <div>
             <mat-table [dataSource]="dataSource" matSort>
               <ng-container matColumnDef="dpcno">
-                <mat-header-cell *matHeaderCellDef>DPC No.</mat-header-cell>
+                <mat-header-cell *matHeaderCellDef>No.</mat-header-cell>
                 <mat-cell *matCellDef="let element">
                   {{ element.dpcno }}
+                </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="dpc_date">
+                <mat-header-cell *matHeaderCellDef> Dpc Date </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  {{ element.dpc_date | date : "dd/MM/yyyy" }}
                 </mat-cell>
               </ng-container>
               <ng-container matColumnDef="jobspec">
@@ -70,27 +73,29 @@
                 </mat-cell>
               </ng-container>
 
-              <ng-container matColumnDef="dpc_date">
-                <mat-header-cell *matHeaderCellDef> DPC Date </mat-header-cell>
-                <mat-cell *matCellDef="let element">
-                  {{ element.dpc_date | date : "dd/MM/yyyy" }}
-                </mat-cell>
-              </ng-container>
               <ng-container matColumnDef="custcode">
-                <mat-header-cell *matHeaderCellDef> custcode</mat-header-cell>
+                <mat-header-cell *matHeaderCellDef> Customer</mat-header-cell>
                 <mat-cell *matCellDef="let element">
                   {{ element.custcode }}
                 </mat-cell>
               </ng-container>
 
-              <ng-container matColumnDef="createdby">
+              <ng-container matColumnDef="requestby">
                 <mat-header-cell *matHeaderCellDef>
-                  Created by
+                  Request by
                 </mat-header-cell>
                 <mat-cell *matCellDef="let element">
-                  {{ element.createdby }}
+                  {{ element.requestby }}
                 </mat-cell>
               </ng-container>
+
+              <ng-container matColumnDef="state">
+                <mat-header-cell *matHeaderCellDef>Status Job</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  {{ element.state }}
+                </mat-cell>
+              </ng-container>
+
               <ng-container ng-container matColumnDef="action">
                 <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
                 <mat-cell *matCellDef="let element">
@@ -99,26 +104,26 @@
                     [matMenuTriggerFor]="menu"
                     aria-label="Example icon-button with a menu"
                   >
-                    <mat-icon color="primary">more_vert</mat-icon>
+                    <mat-icon color="primary">more_horiz</mat-icon>
                   </button>
                   <mat-menu #menu="matMenu">
                     <button mat-menu-item (click)="onEditJob(element.dpcno)">
-                      <mat-icon color="primary">edit_note</mat-icon>
-                      <span>Edit job</span>
+                      <mat-icon>edit_note</mat-icon>
+                      <span>Edit</span>
                     </button>
                     <button mat-menu-item (click)="onViewJob(element.dpcno)">
-                      <mat-icon>remove_red_eye</mat-icon>
-                      <span>View job</span>
+                      <mat-icon>print</mat-icon>
+                      <span>Print</span>
                     </button>
 
                     <!-- <button mat-menu-item (click)="onView(element.dpcno)">
                       <mat-icon>remove_red_eye</mat-icon>
                       <span>View job</span>
                     </button> -->
-                    <button mat-menu-item (click)="delete(element.dpcno)">
+                    <!-- <button mat-menu-item (click)="delete(element.dpcno)">
                       <mat-icon color="warn">delete</mat-icon>
                       <span>Delete job</span>
-                    </button>
+                    </button> -->
                   </mat-menu>
                 </mat-cell>
               </ng-container>

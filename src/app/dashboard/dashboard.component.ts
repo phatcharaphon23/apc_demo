@@ -1,3 +1,4 @@
+import { GetService } from 'src/app/__service/get.service';
 import { Component, HostListener, OnInit } from '@angular/core';
 import { HttpService } from './../__service/http.service';
 import { MatTableDataSource } from '@angular/material/table';
@@ -41,15 +42,16 @@ export class DashboardComponent implements OnInit {
   showView: boolean = false;
   jobData: any;
   isPrinting: boolean = false;
+  isClicked: boolean = false;
 
   constructor(
     private http: HttpService,
     private dialogFrom: MatDialog,
     private jobUpdateService: JobUpdateService,
-    private router: Router 
+    private router: Router,
+    private getService: GetService
   ) {
     this.jobUpdateService.jobUpdated$.subscribe(() => {
-      // ทำการอัพเดต table หรือทำสิ่งที่ต้องการ
       this.getList();
     });
     this.jobUpdateService.updateEvent.subscribe(() => {
@@ -67,10 +69,11 @@ export class DashboardComponent implements OnInit {
 
   displayedColumns: string[] = [
     'dpcno',
-    'jobspec',
     'dpc_date',
-    'createdby',
+    'jobspec',
+    'requestby',
     'custcode',
+    'state',
     'action',
   ];
 
@@ -83,7 +86,7 @@ export class DashboardComponent implements OnInit {
     this.http
       .POST('/api/list', body)
       .then((response: any) => {
-        console.log(response);
+        // console.log(response);
         this.data = response.info;
         this.pages = response.pages;
         this.page = response.page;
@@ -146,9 +149,12 @@ export class DashboardComponent implements OnInit {
       });
   }
 
+  toggleClick() {
+    this.isClicked = !this.isClicked;
+  }
   onEditJob(dpcno: number) {
     const jobData = this.data.find((item) => item.dpcno === dpcno);
-    console.log('jobData to be sent:', jobData);
+    // console.log('jobData to be sent:', jobData);
     const dialogRef = this.dialogFrom.open(UpdateComponent, {
       data: {
         jobData: jobData,
@@ -156,7 +162,7 @@ export class DashboardComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
+      // console.log('The dialog was closed');
     });
   }
 
@@ -233,12 +239,9 @@ export class DashboardComponent implements OnInit {
 
   onViewJob(dpcno: number) {
     const jobData = this.data.find((item) => item.dpcno === dpcno);
-    console.log('JobData:', jobData);
+    // console.log('DashboardComponent - JobData:', jobData);
     this.jobData = jobData;
     this.showView = true;
     this.showlist = false;
-
   }
-  
-
 }

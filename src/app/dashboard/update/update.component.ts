@@ -5,6 +5,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { HttpService } from 'src/app/__service/http.service';
 import { JobUpdateService } from 'src/app/__service/job-update.service';
 import { Router } from '@angular/router';
+import { GetService } from 'src/app/__service/get.service';
+import { SnackService } from 'src/app/__service/snack.service';
 
 @Component({
   selector: 'app-update',
@@ -13,9 +15,20 @@ import { Router } from '@angular/router';
 })
 export class UpdateComponent implements OnInit {
   jobspec: string = '';
-  // editJob: boolean = false;
+  editJob: boolean = false;
   submitted: boolean = false;
-  // jobtypes: string[] = ['design quantity', 'composing a/w', 'ready made a/w'];
+  operators: string[] = [];
+  filteredOperators: { employee_id: string; username: string }[] = [];
+
+  selectedOperator: string = '';
+
+  requests: string[] = [];
+  filteredRequest: { employee_id: string; username: string }[] = [];
+  selectedRequest: string = '';
+
+  groups: string[] = [];
+  filteredGroups: { group_id: string; group_name: string }[] = [];
+  selectedGroup: string = '';
   finish: boolean = true;
   complete: boolean = true;
   color: ThemePalette = 'primary';
@@ -24,8 +37,10 @@ export class UpdateComponent implements OnInit {
   @Input() jobtype: any;
 
   constructor(
+    private getService: GetService,
     private jobUpdateService: JobUpdateService,
     private dialogRef: MatDialogRef<UpdateComponent>,
+    private snackBar: SnackService,
     @Inject(MAT_DIALOG_DATA) public data: any,
 
     private http: HttpService
@@ -39,7 +54,7 @@ export class UpdateComponent implements OnInit {
     status_order: new FormControl('', [Validators.minLength(1)]),
     working_date: new FormControl('', [Validators.required]),
     due_date: new FormControl(''),
-    // createdby: new FormControl({ value: '', disabled: true }),
+    createdby: new FormControl({ value: '', disabled: true }),
     requestby: new FormControl('', [Validators.required]),
     operator_id: new FormControl('', [Validators.required]),
     urgent_aw: new FormControl(''),
@@ -62,6 +77,9 @@ export class UpdateComponent implements OnInit {
   });
 
   ngOnInit(): void {
+    this.getOperate();
+    this.getRequestby();
+    this.getGroup();
     const today = new Date();
     const jobtypeControl = this.form.get('jobtype');
     const quantityControl = this.form.get('quantity');
@@ -79,7 +97,7 @@ export class UpdateComponent implements OnInit {
         status_order: this.data.jobData.status_order,
         working_date: this.data.jobData.working_date,
         due_date: this.data.jobData.due_date,
-        // createdby: this.data.jobData.createdby,
+        createdby: this.data.jobData.createdby,
         requestby: this.data.jobData.requestby,
         operator_id: this.data.jobData.operator_id,
         urgent_aw: this.data.jobData.urgent_aw,
@@ -119,6 +137,67 @@ export class UpdateComponent implements OnInit {
         quantityControl?.disable();
       }
     });
+    console.log('UpdateComponent', this.jobData);
+  }
+
+  // TODO function getOperate
+  getOperate() {
+    this.getService
+      .GET('/api/operators')
+      .then((res: any) => {
+        // console.log("oper",res);
+        this.operators = res;
+        this.filteredOperators = res;
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+  onSelectOperator(operator: string | null): void {
+    if (operator !== null) {
+      this.selectedOperator = operator;
+    }
+  }
+
+  // TODO function getRequestby
+  getRequestby() {
+    this.getService
+      .GET('/api/requestby')
+      .then((res: any) => {
+        // console.log(res);
+        this.requests = res;
+        this.filteredRequest = res;
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+  onSelectRequest(request: string | null): void {
+    if (request !== null) {
+      this.selectedRequest = request;
+    }
+  }
+
+  // TODO function getGroup
+  getGroup() {
+    this.getService
+      .GET('/api/groupname')
+      .then((res: any) => {
+        // console.log(res);
+        this.groups = res;
+        this.filteredGroups = res;
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+  onSelectGroup(group: string | null): void {
+    if (group !== null) {
+      this.selectedGroup = group;
+    }
   }
 
   onSave() {
@@ -129,13 +208,15 @@ export class UpdateComponent implements OnInit {
     const dpcno = this.form.get('dpcno')?.value;
     const jobspec = this.form.get('jobspec')?.value;
     const dpc_date = this.form.get('dpc_date')?.value;
-    const dpcgroup = this.form.get('dpcgroup')?.value;
+    const dpcgroup = this.selectedGroup || this.form.get('dpcgroup')?.value;
     const status_order = this.form.get('status_order')?.value;
     const working_date = this.form.get('working_date')?.value;
     const due_date = this.form.get('due_date')?.value;
-    // const createdby = this.form.get('createdby')?.value;
-    const requestby = this.form.get('requestby')?.value;
-    const operator_id = this.form.get('operator_id')?.value;
+    const createdby = this.form.get('createdby')?.value;
+    const requestby = this.selectedRequest || this.form.get('requestby')?.value;
+
+    const operator_id =
+      this.selectedOperator || this.form.get('operator_id')?.value;
     const urgent_aw = this.form.get('urgent_aw')?.value;
     const urgent_film = this.form.get('urgent_film')?.value;
     const urgent_normal = this.form.get('urgent_normal')?.value;
@@ -162,7 +243,7 @@ export class UpdateComponent implements OnInit {
       status_order: status_order,
       working_date: working_date,
       due_date: due_date,
-      // createdby: createdby,
+      createdby: createdby,
       requestby: requestby,
       operator_id: operator_id,
       urgent_aw: urgent_aw,
@@ -187,7 +268,8 @@ export class UpdateComponent implements OnInit {
     this.http
       .POST('/api/update_dpc', body)
       .then((res: any) => {
-        console.log(res);
+        // console.log(res);
+        this.snackBar.CustomSnackBar('Update job successful', 3000, 'success');
         this.jobUpdateService.triggerJobUpdate();
         this.onClose();
       })
