@@ -1,0 +1,61 @@
+
+@media print {
+    .page__box {
+      display: none; /* ซ่อนปุ่ม New Jobs */
+    }
+    .container-fluid.page {
+      width: 100%; /* ทำให้เท่ากับขนาดกระดาษ A4 */
+    }
+    .mat-expansion{
+      display: none; 
+    }
+  
+    .app-invoice{
+      display: none; 
+    }
+    app-print-page .print-content {
+      display: block !important;
+    }
+    
+  }
+.print-content {
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+@page {
+  size: A4;
+  margin: 1cm;
+}
+
+html, body, h1, h2, h3, h4, p, img { margin: 1;} /* margin reset*/
+h1{font-size: 16pt; font-weight: 500; margin-bottom: 0.5cm;}
+h2{font-size: 10pt; }
+p{font-size: 8pt;}
+
+.items-group {
+  border-style: solid;
+  border-color: black;
+  border-width: 1pt 1pt 1pt 1pt;
+  border-radius: 5pt;
+  padding: 3pt 3pt 3pt 3pt;
+  margin: 9pt 0 9pt 0;
+}
+
+.logotipo {
+  width: 6cm;
+  height: 4cm;
+  margin: -0.5cm;
+}
+
+.label { font-weight: 500;}
+
+.disclaimer, .address p {
+  font-size: 10pt;
+}
+
+.signature-field {
+  padding-bottom: 24pt;
+  border-bottom: solid black 1pt;
+}
+

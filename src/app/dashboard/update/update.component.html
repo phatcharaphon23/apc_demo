@@ -1,0 +1,310 @@
+<div mat-dialog-title>
+  <span><i class="material-icons">edit_note</i>Edit JOB</span>
+  <button
+    class="logo position-absolute end-0"
+    mat-icon-button
+    color="ready"
+    aria-label="Example icon button with a close icon"
+    (click)="onClose()"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+
+  <div>
+    <div mat-dialog-content class="content">
+      <form class="Detail-form" [formGroup]="form">
+        <h4 style="color: black">Detail-form</h4>
+        <div>
+          <td>
+            <mat-form-field appearance="outline">
+              <mat-label>dpc No</mat-label>
+              <input matInput formControlName="dpcno" />
+            </mat-form-field>
+          </td>
+        </div>
+        <table class="example-full-width">
+          <tr>
+            <!-- DPC No From -->
+            <td>
+              <mat-form-field appearance="outline">
+                <mat-label>Jobspec No</mat-label>
+                <input matInput formControlName="jobspec" />
+                <mat-hint>Enter job spec</mat-hint>
+              </mat-form-field>
+
+              <!-- <mat-form-field appearance="outline">
+                <mat-label>Created By</mat-label>
+                <input matInput formControlName="createdby"/>
+              </mat-form-field> -->
+            </td>
+
+            <!-- Job spec No From -->
+
+            <td>
+              <mat-form-field appearance="outline" class="example-form-field">
+                <mat-label>Job Date</mat-label>
+                <input
+                  matInput
+                  [matDatepicker]="datepicker"
+                  formControlName="dpc_date"
+                  readonly
+                />
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle
+                  matIconSuffix
+                  [for]="datepicker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #datepicker>
+                  <mat-datepicker-actions>
+                    <button mat-button matDatepickerCancel>Cancel</button>
+                    <button
+                      mat-raised-button
+                      color="primary"
+                      matDatepickerApply
+                    >
+                      Apply
+                    </button>
+                  </mat-datepicker-actions>
+                </mat-datepicker>
+              </mat-form-field>
+            </td>
+          </tr>
+        </table>
+        <div class="customer-style">
+          <mat-form-field appearance="outline">
+            <mat-label>Cutomer code </mat-label>
+            <input matInput formControlName="custcode" />
+            <mat-hint>Enter Cutomer</mat-hint>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="customer-deteil-width">
+            <mat-label>Customer name</mat-label>
+            <input matInput formControlName="customer_name" />
+          </mat-form-field>
+        </div>
+
+        <div class="customer-style">
+          <mat-form-field appearance="outline" class="example-full-width">
+            <mat-label>Product name</mat-label>
+            <input matInput formControlName="productname" />
+          </mat-form-field>
+        </div>
+
+        <table class="example-full-width">
+          <tr>
+            <td>
+              <mat-form-field appearance="outline" class="example-full-width">
+                <mat-label>Request By</mat-label>
+                <mat-select formControlName="requestby">
+                  <mat-option value="RequestV1">RequestV1</mat-option>
+                  <mat-option value="RequestV2">RequestV2</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field appearance="outline">
+                <mat-label>Operator</mat-label>
+                <input matInput formControlName="operator_id" />
+                <mat-autocomplete #auto="matAutocomplete"> </mat-autocomplete>
+              </mat-form-field>
+            </td>
+
+            <td>
+              <mat-form-field appearance="outline">
+                <mat-label>Working Date</mat-label>
+                <input
+                  matInput
+                  [matDatepicker]="datepicker02"
+                  formControlName="working_date"
+                  [readonly]="true"
+                />
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle
+                  matIconSuffix
+                  [for]="datepicker02"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #datepicker02></mat-datepicker>
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <!-- dpc group -->
+            <td>
+              <mat-form-field appearance="outline">
+                <mat-label>Group</mat-label>
+                <mat-select formControlName="dpcgroup">
+                  <mat-option value="BF">BF</mat-option>
+                  <mat-option value="BS">BS</mat-option>
+                  <mat-option value="CARD">CARD</mat-option>
+                  <mat-option value="DPS">DPS</mat-option>
+                  <mat-option value="IL">IL</mat-option>
+                  <mat-option value="BS">OTHER</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </td>
+
+            <!-- dpc status -->
+            <td>
+              <mat-form-field appearance="outline">
+                <mat-label>Status</mat-label>
+                <mat-select formControlName="status_order">
+                  <mat-option value="New Order">New Order</mat-option>
+                  <mat-option value="Repeat Order">Repeat Order</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </td>
+            <!-- dpc Date Form -->
+
+            <td>
+              <mat-form-field appearance="outline">
+                <mat-label>Due Date</mat-label>
+                <input
+                  matInput
+                  [matDatepicker]="datepicker03"
+                  formControlName="due_date"
+                  [readonly]="true"
+                />
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle
+                  matIconSuffix
+                  [for]="datepicker03"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #datepicker03></mat-datepicker>
+              </mat-form-field>
+            </td>
+          </tr>
+        </table>
+        <div class="select-style">
+          <!-- SPECIAL DESCRIPTION FROM -->
+          <section class="example-section">
+            <h4 class="example-margin" style="color: black">
+              Select your special description:
+            </h4>
+            <p>
+              <mat-checkbox formControlName="urgent_normal"
+                >Normal</mat-checkbox
+              >
+            </p>
+            <p>
+              <mat-checkbox formControlName="urgent_aw"
+                >Urgent A/W</mat-checkbox
+              >
+            </p>
+            <p>
+              <mat-checkbox formControlName="urgent_film"
+                >Urgent FILM</mat-checkbox
+              >
+            </p>
+          </section>
+          <!-- JOBTYPE FROM -->
+          <section class="example-section">
+            <h4 class="example-margin" style="color: black">Job Type:</h4>
+            <mat-radio-group formControlName="jobtype">
+              <p>
+                <mat-radio-button class="example-radio-button" value="design"
+                  >Design Quantity</mat-radio-button
+                >
+                <input formControlName="quantity">
+              </p>
+              <p>
+                <mat-radio-button class="example-radio-button" value="compos_aw"
+                  >Composing A/W</mat-radio-button
+                >
+              </p>
+              <p>
+                <mat-radio-button class="example-radio-button" value="ready_aw"
+                  >Ready Made A/W</mat-radio-button
+                >
+              </p>
+            </mat-radio-group>
+          </section>
+        </div>
+
+        <table>
+          <!-- For update job -->
+          <h4 style="color: black">Detail For Update:</h4>
+
+          <tr>
+            <!-- finish job -->
+            <td>
+              <p>
+                <mat-checkbox
+                  formControlName="finish"
+                  (change)="onFinish($event)"
+                  >finish</mat-checkbox
+                >
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <mat-form-field appearance="outline">
+                <mat-label>Total Correction</mat-label>
+                <input matInput formControlName="totcor" />
+                <mat-hint>Total Correction</mat-hint>
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field appearance="outline">
+                <mat-label>Finish Date</mat-label>
+                <input
+                  matInput
+                  [matDatepicker]="dp"
+                  formControlName="fdate"
+                  [readonly]="true"
+                />
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle
+                  matIconSuffix
+                  [for]="dp"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #dp></mat-datepicker>
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <!-- Complete job -->
+            <td>
+              <p>
+                <mat-checkbox
+                  formControlName="complete"
+                  (change)="onComplete($event)"
+                  >complete</mat-checkbox
+                >
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <mat-form-field appearance="outline">
+                <mat-label>Estimate Film + Plate Files</mat-label>
+                <input matInput formControlName="qty_estimatefilm" />
+                <mat-hint>Estimate Film + Plate Files</mat-hint>
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field appearance="outline">
+                <mat-label>Complete Date</mat-label>
+                <input
+                  matInput
+                  [matDatepicker]="dp2"
+                  formControlName="cdate"
+                  [readonly]="true"
+                />
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle
+                  matIconSuffix
+                  [for]="dp2"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #dp2></mat-datepicker>
+              </mat-form-field>
+            </td>
+          </tr>
+        </table>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div mat-dialog-actions align="end" class="action">
+  <button mat-raised-button color="primary" (click)="onSave()">Save</button>
+</div>

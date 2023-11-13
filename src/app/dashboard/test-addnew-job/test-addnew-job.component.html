@@ -1,0 +1,226 @@
+<div mat-dialog-title>
+  <span><i class="material-icons">post_add</i> NEW JOB</span>
+  <button
+    class="logo position-absolute end-0"
+    mat-icon-button
+    color="ready"
+    aria-label="Example icon button with a close icon"
+    (click)="onClose()"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+
+  <div>
+    <div mat-dialog-content class="content">
+      <form class="Detail-form" [formGroup]="form">
+        <h4 style="color: black">Detail-form</h4>
+        <table class="example-full-width">
+          <tr>
+            <!-- DPC No From -->
+            <td>
+              <mat-form-field appearance="outline">
+                <mat-label>Jobspec No</mat-label>
+                <input matInput formControlName="jobspec" />
+                <mat-hint>Enter job spec</mat-hint>
+              </mat-form-field>
+            </td>
+            <!-- <td>
+              <mat-form-field appearance="outline">
+                <mat-label>Created By</mat-label>
+                <input matInput formControlName="createdby" readonly />
+              </mat-form-field>
+            </td> -->
+          </tr>
+        </table>
+        <div class="customer-style">
+          <mat-form-field appearance="outline">
+            <mat-label>Cutomer name</mat-label>
+            <input matInput formControlName="custcode" />
+            <mat-hint>Enter Cutomer</mat-hint>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="customer-deteil-width">
+            <mat-label>Customer name</mat-label>
+            <input matInput formControlName="customer_name" />
+          </mat-form-field>
+        </div>
+
+        <div class="customer-style">
+          <mat-form-field appearance="outline" class="example-full-width">
+            <mat-label>Product name</mat-label>
+            <input matInput formControlName="productname" />
+          </mat-form-field>
+        </div>
+
+        <table class="example-full-width">
+          <tr>
+            <td>
+              <!-- <mat-form-field appearance="outline" class="example-full-width">
+                <mat-label>Request By</mat-label>
+                <mat-select formControlName="requestby">
+                  <mat-option value="RequestV1">RequestV1</mat-option>
+                  <mat-option value="RequestV2">RequestV2</mat-option>
+                </mat-select>
+              </mat-form-field> -->
+              <!-- your.component.html -->
+              <!-- ตรวจสอบว่า formControlName ตรงกับชื่อ Control ใน Angular Reactive Forms -->
+              <mat-form-field appearance="outline" class="example-full-width">
+                <mat-label>Request By</mat-label>
+                <mat-select formControlName="requestby">
+                  <!-- *ngFor ใช้วนลูปตามข้อมูลใน requestOptions ที่ต้องเป็นอาร์เรย์ -->
+                  <mat-option *ngFor="let option of requestOptions" [value]="option">
+                    {{ option }}
+                  </mat-option>
+                  
+                </mat-select>
+              </mat-form-field>
+            </td>
+            <td>
+              <!-- <mat-form-field appearance="outline">
+                <mat-label>Operator</mat-label>
+                <mat-select formControlName="operator_id">
+                  <mat-option value="OperV1">OperV1</mat-option>
+                  <mat-option value="OperV2">OperV2</mat-option>
+                </mat-select>
+              </mat-form-field> -->
+              <mat-form-field appearance="outline">
+                <mat-label>Operator</mat-label>
+                <input
+                  matInput
+                  formControlName="operator_id"
+                  [matAutocomplete]="auto"
+                  (input)="onOperatorInput($event)"
+                />
+                <mat-autocomplete #auto="matAutocomplete">
+                  <mat-option
+                    *ngFor="let operator of filteredOperators"
+                    [value]="operator"
+                  >
+                    {{ operator }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </td>
+            <!-- dpc Date Form -->
+
+            <div>
+              <mat-form-field appearance="outline">
+                <mat-label>Working Date</mat-label>
+                <input
+                  matInput
+                  [matDatepicker]="datepicker02"
+                  formControlName="working_date"
+                  [readonly]="true"
+                />
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle
+                  matIconSuffix
+                  [for]="datepicker02"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #datepicker02></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </tr>
+          <tr>
+            <!-- dpc group -->
+            <td>
+              <mat-form-field appearance="outline">
+                <mat-label>Group</mat-label>
+                <mat-select formControlName="dpcgroup">
+                  <mat-option value="BF">BF</mat-option>
+                  <mat-option value="BS">BS</mat-option>
+                  <mat-option value="CARD">CARD</mat-option>
+                  <mat-option value="DPS">DPS</mat-option>
+                  <mat-option value="IL">IL</mat-option>
+                  <mat-option value="BS">OTHER</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </td>
+
+            <!-- dpc status -->
+            <td>
+              <mat-form-field appearance="outline">
+                <mat-label>Status</mat-label>
+                <mat-select formControlName="status_order">
+                  <mat-option value="New Order">New Order</mat-option>
+                  <mat-option value="Repeat Order">Repeat Order</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </td>
+            <!-- dpc Date Form -->
+
+            <td>
+              <mat-form-field appearance="outline">
+                <mat-label>Due Date</mat-label>
+                <input
+                  matInput
+                  [matDatepicker]="datepicker03"
+                  formControlName="due_date"
+                  [readonly]="true"
+                />
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle
+                  matIconSuffix
+                  [for]="datepicker03"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #datepicker03></mat-datepicker>
+              </mat-form-field>
+            </td>
+          </tr>
+        </table>
+        <div class="select-style">
+          <!-- SPECIAL DESCRIPTION FROM -->
+          <section class="example-section">
+            <h4 class="example-margin" style="color: black">
+              Select your special description:
+            </h4>
+            <p>
+              <mat-checkbox formControlName="urgent_normal"
+                >Normal</mat-checkbox
+              >
+            </p>
+            <p>
+              <mat-checkbox formControlName="urgent_aw"
+                >Urgent A/W</mat-checkbox
+              >
+            </p>
+            <p>
+              <mat-checkbox formControlName="urgent_film"
+                >Urgent FILM</mat-checkbox
+              >
+            </p>
+          </section>
+
+          <!-- JOBTYPE FROM -->
+          <section class="example-section">
+            <h4 class="example-margin" style="color: black" color="primary">
+              Job Type:
+            </h4>
+            <mat-radio-group
+              aria-labelledby="example-radio-group-label"
+              class="example-radio-group"
+            >
+              <mat-radio-button
+                class="example-radio-button"
+                *ngFor="let jobtype of jobtypes"
+                [value]="jobtype"
+                (click)="selectjobType(jobtype)"
+              >
+                {{ jobtype }}
+              </mat-radio-button>
+            </mat-radio-group>
+
+            <div class="example-margin">
+              <label for="quantity">Quantity:</label>
+              <input type="number" id="quantity" formControlName="quantity" />
+            </div>
+          </section>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div mat-dialog-actions align="end" class="action">
+  <button mat-raised-button (click)="onReset()">Reset</button>
+  <button mat-raised-button color="primary" (click)="onSave()">Save</button>
+</div>

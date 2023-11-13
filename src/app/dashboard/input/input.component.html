@@ -1,0 +1,179 @@
+<div mat-dialog-title>
+  <span style="font-weight: bold">NEW JOB</span>
+  <button
+    class="logo position-absolute end-0"
+    mat-icon-button
+    color="ready"
+    aria-label="Example icon button with a close icon"
+    (click)="close()"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<div mat-dialog-content class="content">
+  <!-- DETEIL FROM -->
+  <form class="Detail-form">
+    <h4 style="color: black">Detail-form</h4>
+    <table class="example-full-width">
+      <tr>
+        <!-- <td>Jobspec</td> -->
+        <td>
+          <mat-form-field appearance="outline">
+            <mat-label>Jobspec No</mat-label>
+            <input matInput />
+            <mat-hint>Serch job spec</mat-hint>
+          </mat-form-field>
+        </td>
+      </tr>
+    </table>
+
+    <table class="example-full-width">
+      <tr>
+        <td>
+          <mat-form-field appearance="outline">
+            <mat-label>ID Customer</mat-label>
+            <input matInput />
+            <mat-hint>ID Customer </mat-hint>
+          </mat-form-field>
+        </td>
+      </tr>
+    </table>
+    <p>
+      <mat-form-field appearance="outline" class="example-full-width">
+        <mat-label>Customer</mat-label>
+        <input matInput />
+        <textarea matInput></textarea>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="outline" class="example-full-width">
+        <mat-label>Product</mat-label>
+        <input matInput />
+        <textarea matInput></textarea>
+      </mat-form-field>
+    </p>
+
+    <table class="example-full-width" cellspacing="0">
+      <tr>
+        <td>
+          <mat-form-field appearance="outline">
+            <mat-label>Request By</mat-label>
+            <input type="text" matInput [matAutocomplete]="auto" />
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option>Clear</mat-option>
+              <mat-option value="valid">Valid option</mat-option>
+              <mat-option value="invalid">Invalid option</mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field appearance="outline">
+            <mat-label>Group</mat-label>
+            <mat-select>
+              <mat-option value="BF">BF</mat-option>
+              <mat-option value="BS">BS</mat-option>
+              <mat-option value="CARD">CARD</mat-option>
+              <mat-option value="DPS">DPS</mat-option>
+              <mat-option value="IL">IL</mat-option>
+              <mat-option value="BS">OTHER</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field appearance="outline" class="example-form-field">
+            <mat-label>Working Date</mat-label>
+            <input matInput [matDatepicker]="datepicker" />
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="datepicker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #datepicker>
+              <mat-datepicker-actions>
+                <button mat-button matDatepickerCancel>Cancel</button>
+                <button mat-raised-button color="primary" matDatepickerApply>
+                  Apply
+                </button>
+              </mat-datepicker-actions>
+            </mat-datepicker>
+          </mat-form-field>
+        </td>
+      </tr>
+    </table>
+
+    <table class="example-full-width" cellspacing="0">
+      <tr>
+        <td>
+          <mat-form-field appearance="outline">
+            <mat-label>Operator By</mat-label>
+            <input type="text" matInput [matAutocomplete]="auto" />
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option>Clear</mat-option>
+              <mat-option value="valid">Valid option</mat-option>
+              <mat-option value="invalid">Invalid option</mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field appearance="outline">
+            <mat-label>Status</mat-label>
+            <mat-select>
+              <mat-option value="BF">New Order</mat-option>
+              <mat-option value="BS">Repeat Order</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field appearance="outline" class="example-form-field">
+            <mat-label>Due Date</mat-label>
+            <input matInput [matDatepicker]="duedate" />
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="duedate"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #duedate>
+              <mat-datepicker-actions>
+                <button mat-button matDatepickerCancel>Cancel</button>
+                <button mat-raised-button color="primary" matDatepickerApply>
+                  Apply
+                </button>
+              </mat-datepicker-actions>
+            </mat-datepicker>
+          </mat-form-field>
+        </td>
+      </tr>
+    </table>
+  </form>
+
+  <!-- SPECIAL DESCRIPTION FROM -->
+  <section class="example-section">
+    <h4 style="color: black">Select your special description:</h4>
+    <p><mat-checkbox formControlName="normal">Normal</mat-checkbox></p>
+    <p><mat-checkbox formControlName="urgent a/w">Urgent A/W</mat-checkbox></p>
+    <p>
+      <mat-checkbox formControlName="urgent film">Urgent FILM</mat-checkbox>
+    </p>
+  </section>
+
+  <!-- JOBTYPE FROM -->
+  <section class="example-radio">
+    <h4 class="example-margin" style="color: black">Job Type:</h4>
+    <mat-radio-group>
+      <mat-radio-button class="example-margin" value="design quantity"
+        >Design Quantity</mat-radio-button
+      >
+      <input class="example-input-quantity" />
+      <mat-radio-button class="example-margin" value="composing a/w"
+        >Composing A/W</mat-radio-button
+      >
+      <mat-radio-button class="example-margin" value="ready made a/w"
+        >Ready Made A/W</mat-radio-button
+      >
+    </mat-radio-group>
+  </section>
+</div>
+<div mat-dialog-actions align="end" class="action">
+  <button mat-raised-button>Reset</button>
+  <button mat-raised-button color="primary">Save</button>
+</div>

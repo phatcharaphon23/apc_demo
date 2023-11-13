@@ -1,0 +1,151 @@
+<div class="container-fluid page">
+  <div class="page__box pt-4 p-3">
+    <button mat-raised-button color="primary" (click)="openAddJob()">
+      New Jobs
+      <!-- <i class="material-icons">add_circle_outline</i> -->
+    </button>
+  </div>
+  <div class="page_content shadow position-relative">
+    <div class="page_content-data position-relative">
+      <mat-accordion displayMode="flat">
+        <!-- TODO LIST Add-->
+        <mat-expansion-panel
+          [disabled]="false"
+          [expanded]="showView"
+          [hidden]="!showView"
+          hideToggle
+        >
+          <mat-expansion-panel-header>
+            <mat-panel-title>VIEW JOB</mat-panel-title>
+          </mat-expansion-panel-header>
+          <div>
+            <app-print-page
+              class="print-content"
+              [jobData]="jobData"
+            ></app-print-page>
+            <app-invoice (controls)="onControls($event)"></app-invoice>
+          </div>
+        </mat-expansion-panel>
+        <!-- TODO LIST -->
+        <mat-expansion-panel
+          [disabled]="true"
+          [expanded]="showlist"
+          [hidden]="!showlist"
+          hideToggle
+        >
+          <mat-expansion-panel-header>
+            <h4>DPC Table</h4>
+          </mat-expansion-panel-header>
+          <div class="search-container">
+            <div class="input-group">
+              <input
+                matInput
+                type="text"
+                id=""
+                [(ngModel)]="searchKeyword"
+                placeholder="Sesrch Jobspec"
+                (keyup.enter)="searchJob()"
+              />
+              <button mat-icon-button (click)="searchJob()">
+                <mat-icon>search</mat-icon>
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <mat-table [dataSource]="dataSource" matSort>
+              <ng-container matColumnDef="dpcno">
+                <mat-header-cell *matHeaderCellDef>DPC No.</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  {{ element.dpcno }}
+                </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="jobspec">
+                <mat-header-cell *matHeaderCellDef>
+                  Job Spec
+                  <!-- <mat-icon>filter_alt</mat-icon> -->
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  {{ element.jobspec }}
+                </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="dpc_date">
+                <mat-header-cell *matHeaderCellDef> DPC Date </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  {{ element.dpc_date | date : "dd/MM/yyyy" }}
+                </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="custcode">
+                <mat-header-cell *matHeaderCellDef> custcode</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  {{ element.custcode }}
+                </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="createdby">
+                <mat-header-cell *matHeaderCellDef>
+                  Created by
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  {{ element.createdby }}
+                </mat-cell>
+              </ng-container>
+              <ng-container ng-container matColumnDef="action">
+                <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  <button
+                    mat-icon-button
+                    [matMenuTriggerFor]="menu"
+                    aria-label="Example icon-button with a menu"
+                  >
+                    <mat-icon color="primary">more_vert</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="onEditJob(element.dpcno)">
+                      <mat-icon color="primary">edit_note</mat-icon>
+                      <span>Edit job</span>
+                    </button>
+                    <button mat-menu-item (click)="onViewJob(element.dpcno)">
+                      <mat-icon>remove_red_eye</mat-icon>
+                      <span>View job</span>
+                    </button>
+
+                    <!-- <button mat-menu-item (click)="onView(element.dpcno)">
+                      <mat-icon>remove_red_eye</mat-icon>
+                      <span>View job</span>
+                    </button> -->
+                    <button mat-menu-item (click)="delete(element.dpcno)">
+                      <mat-icon color="warn">delete</mat-icon>
+                      <span>Delete job</span>
+                    </button>
+                  </mat-menu>
+                </mat-cell>
+              </ng-container>
+
+              <mat-header-row
+                *matHeaderRowDef="displayedColumns"
+              ></mat-header-row>
+              <mat-row
+                *matRowDef="let row; columns: displayedColumns"
+              ></mat-row>
+            </mat-table>
+            <div class="row">
+              <div class="small text-end">
+                <span class="pagelabel text-muted">
+                  Page {{ page + " of " + pages }}
+                </span>
+                <button mat-icon-button (click)="onBack()" [disabled]="ifFirst">
+                  <mat-icon>arrow_back_ios_new</mat-icon>
+                </button>
+                <button mat-icon-button (click)="onNext()" [disabled]="ifEnd">
+                  <mat-icon>arrow_forward_ios</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </div>
+</div>

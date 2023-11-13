@@ -1,0 +1,27 @@
+{
+  "/gest": {
+    "target": "http://127.0.0.1:8082",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+},
+  "/api": {
+    "target": "http://localhost:8082",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+
+  "/cat": {
+    "target": "http://127.0.0.1:8082",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/invent": {
+    "target": "http://127.0.0.1:8082",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}

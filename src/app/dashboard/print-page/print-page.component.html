@@ -1,0 +1,120 @@
+<div class="print-content" style="text-transform: uppercase">
+  <div class="row align-items-start">
+    <div class="col">
+      <span>DATE : {{ jobData?.dpc_date | date : "dd LLLL yyyy" }}</span>
+    </div>
+    <div class="col">
+      <h2>DESIGN PRODUCT CONTROL</h2>
+    </div>
+    <div class="col">
+      <p>NO : {{ jobData?.dpcno }}</p>
+    </div>
+  </div>
+  <div class="row g-0">
+    <div class="col-sm-6 col-md-8">
+      <p>JOBSPEC : {{ jobData?.jobspec }}</p>
+    </div>
+    <div class="col-6 col-md-4">
+      <p>GROUP : {{ jobData?.dpcgroup }}</p>
+    </div>
+  </div>
+  <div class="row g-0">
+    <div class="col-sm-6 col-md-8">
+      <p>CUSTOMER CODE : {{ jobData?.custcode }}</p>
+    </div>
+    <div class="col-6 col-md-4">
+      <p>STATUS : {{ jobData?.status_order }}</p>
+    </div>
+  </div>
+  <div class="row g-0">
+    <div class="col-sm-6 col-md-8">
+      <p>PRODUCT NAME : {{ jobData?.productname }}</p>
+    </div>
+    <div class="col-6 col-md-4">
+      <p>REQUEST BY : {{ jobData?.requestby }}</p>
+    </div>
+  </div>
+  <div class="row g-0">
+    <div class="col-sm-6 col-md-8">
+      <p>CUSTOMER CODE : {{ jobData?.custcode }}</p>
+    </div>
+    <div class="col-6 col-md-4">
+      <p>STATUS : {{ jobData?.status_order }}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <p>DUE DAT : {{ jobData?.due_date | date : "dd LLLL yyyy" }}</p>
+    </div>
+    <div class="col">
+      <p>FINISH DATE : {{ jobData?.fdate | date : "dd LLLL yyyy" }}</p>
+    </div>
+    <div class="col">
+      <p>BY : {{ jobData?.createdby }}</p>
+    </div>
+  </div>
+  <form [formGroup]="myGroup">
+    <div class="checbox-content">
+      <p>TYPE : {{ jobData?.jobtype }}</p>
+      <div class="row">
+        <div class="col">
+          <mat-checkbox formControlName="design"><p>DESIGN QTY</p></mat-checkbox>
+          <p>{{ jobData?.quantity }}</p>
+        </div>
+        <div class="col">
+          <mat-checkbox formControlName="compos_aw"
+            ><p>COMPOSING A/W</p></mat-checkbox
+          >
+        </div>
+        <div class="col">
+          <mat-checkbox formControlName="ready_aw"
+            ><p>READY MADE A/W</p></mat-checkbox
+          >
+        </div>
+        <div class="col"></div>
+      </div>
+    </div>
+    <div></div>
+    <div class="checbox-content">
+      <div class="row">
+        <div class="col">
+          <mat-checkbox formControlName="urgent_normal"
+            ><p>URGENT A/W</p></mat-checkbox
+          >
+        </div>
+        <div class="col">
+          <mat-checkbox formControlName="urgent_aw"
+            ><p>URGENT FILM</p></mat-checkbox
+          >
+        </div>
+        <div class="col">
+          <mat-checkbox formControlName="urgent_film"><p>NORMAL</p></mat-checkbox>
+        </div>
+        <div class="col">
+          <mat-checkbox><p>CANCEL</p></mat-checkbox>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div></div>
+  <div class="row justify-content-md-center">
+    <div class="col col-lg-2">
+      <p>DATE :</p>
+    </div>
+    <div class="col">
+      <p>CORRECTION DESCRIPTION :</p>
+    </div>
+    <div class="col col-lg-2">
+      <p>FINISH :</p>
+    </div>
+    <div class="col col-lg-2">
+      <p>DESIGN QTY :</p>
+    </div>
+    <div class="col col-lg-2">
+      <p>OPID :</p>
+    </div>
+  </div>
+
+  <div></div>
+</div>
