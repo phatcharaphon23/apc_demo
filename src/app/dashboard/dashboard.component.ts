@@ -8,6 +8,8 @@ import { UpdateComponent } from './update/update.component';
 import { JobUpdateService } from '../__service/job-update.service';
 import { PrintPageComponent } from './print-page/print-page.component';
 import { Router } from '@angular/router';
+import { StatusComponent } from '../dashboard/status/status.component';
+import { CancelJobDialogComponent } from './cancel-job-dialog/cancel-job-dialog.component';
 
 interface JobData {
   dpcno: number;
@@ -50,6 +52,7 @@ export class DashboardComponent implements OnInit {
     private jobUpdateService: JobUpdateService,
     private router: Router,
     private getService: GetService
+
   ) {
     this.jobUpdateService.jobUpdated$.subscribe(() => {
       this.getList();
@@ -166,39 +169,53 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  delete(dpcno: number) {
-    const jobData = this.data.find((item) => item.dpcno === dpcno);
-
-    if (jobData && (jobData.finish === 'true' || jobData.complete === 'true')) {
-      alert('ไม่สามารถลบงานที่ finish หรือ complete ได้');
-      return;
-    }
-
-    let body = {
-      dpcno: dpcno,
-      page: this.page,
-      searchKeyword: this.searchKeyword,
-    };
-
-    const confirmDelete = confirm('คุณต้องการลบงานนี้หรือไม่?');
-    if (confirmDelete) {
-      this.http
-        .POST('/api/delete_dpc', body)
-        .then((response: any) => {
-          this.data = this.data.filter((job) => job.dpcno !== dpcno);
-          this.dataSource.data = this.data;
-          this.dataLength = this.data.length;
-          if (this.dataLength === 0) {
-            this.page = 1;
-            this.ifFirst = true;
-            this.ifEnd = true;
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+  openCancelJobDialog(dpcno: number): void {
+    const dialogRef = this.dialogFrom.open(CancelJobDialogComponent, {
+      width: '500px',
+      data: { dpcno: dpcno },
+    });
+  
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        // result คือข้อมูลที่กรอกเหตุผลจาก dialog
+        // this.onStatusCancel(dpcno, result);
+      }
+    });
   }
+
+  // delete(dpcno: number) {
+  //   const jobData = this.data.find((item) => item.dpcno === dpcno);
+
+  //   if (jobData && (jobData.finish === 'true' || jobData.complete === 'true')) {
+  //     alert('ไม่สามารถลบงานที่ finish หรือ complete ได้');
+  //     return;
+  //   }
+
+  //   let body = {
+  //     dpcno: dpcno,
+  //     page: this.page,
+  //     searchKeyword: this.searchKeyword,
+  //   };
+
+  //   const confirmDelete = confirm('คุณต้องการลบงานนี้หรือไม่?');
+  //   if (confirmDelete) {
+  //     this.http
+  //       .POST('/api/delete_dpc', body)
+  //       .then((response: any) => {
+  //         this.data = this.data.filter((job) => job.dpcno !== dpcno);
+  //         this.dataSource.data = this.data;
+  //         this.dataLength = this.data.length;
+  //         if (this.dataLength === 0) {
+  //           this.page = 1;
+  //           this.ifFirst = true;
+  //           this.ifEnd = true;
+  //         }
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   }
+  // }
 
   onBack() {
     if (this.page > 1) {
@@ -239,7 +256,6 @@ export class DashboardComponent implements OnInit {
 
   onViewJob(dpcno: number) {
     const jobData = this.data.find((item) => item.dpcno === dpcno);
-    // console.log('DashboardComponent - JobData:', jobData);
     this.jobData = jobData;
     this.showView = true;
     this.showlist = false;

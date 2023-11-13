@@ -1,0 +1,32 @@
+.Detail-form-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  flex: 1;
+}
+
+.customer-style {
+  display: flex;
+  gap: 10px;
+}
+
+.customer-deteil-width {
+  flex: 1;
+}
+.select-style {
+  display: flex;
+  gap: 16px;
+}
+
+.status-content{
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.option-content{
+  margin-bottom: 10px;
+}

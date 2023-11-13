@@ -92,7 +92,16 @@
               <ng-container matColumnDef="state">
                 <mat-header-cell *matHeaderCellDef>Status Job</mat-header-cell>
                 <mat-cell *matCellDef="let element">
-                  {{ element.state }}
+                  <ng-container *ngIf="element.state">
+                    <button
+                      mat-button
+                      color="primary"
+                      
+                    >
+                      <!-- <mat-icon color="primary">more_horiz</mat-icon> -->
+                      {{ element.state }}
+                    </button>
+                  </ng-container>
                 </mat-cell>
               </ng-container>
 
@@ -107,6 +116,13 @@
                     <mat-icon color="primary">more_horiz</mat-icon>
                   </button>
                   <mat-menu #menu="matMenu">
+                    <!-- <button
+                      mat-menu-item
+                      (click)="onStatusUpdate(element.dpcno)"
+                    >
+                      <mat-icon>update</mat-icon>
+                      <span>Update status</span>
+                    </button> -->
                     <button mat-menu-item (click)="onEditJob(element.dpcno)">
                       <mat-icon>edit_note</mat-icon>
                       <span>Edit</span>
@@ -115,15 +131,10 @@
                       <mat-icon>print</mat-icon>
                       <span>Print</span>
                     </button>
-
-                    <!-- <button mat-menu-item (click)="onView(element.dpcno)">
-                      <mat-icon>remove_red_eye</mat-icon>
-                      <span>View job</span>
-                    </button> -->
-                    <!-- <button mat-menu-item (click)="delete(element.dpcno)">
-                      <mat-icon color="warn">delete</mat-icon>
-                      <span>Delete job</span>
-                    </button> -->
+                    <button mat-menu-item (click)="openCancelJobDialog(element.dpcno)">
+                      <mat-icon color="warn">cancel</mat-icon>
+                      <span>Cancel Job</span>
+                    </button>
                   </mat-menu>
                 </mat-cell>
               </ng-container>

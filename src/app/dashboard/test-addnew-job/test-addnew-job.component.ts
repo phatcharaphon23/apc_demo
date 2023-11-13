@@ -44,13 +44,13 @@ export class TestAddnewJobComponent {
 
   form = new FormGroup({
     jobspec: new FormControl('', [Validators.required]),
-    dpcgroup: new FormControl('', [Validators.required]),
+    // dpcgroup: new FormControl('', [Validators.required]),
     status_order: new FormControl('New Order', [Validators.required]),
     working_date: new FormControl(new Date(), [Validators.required]),
     due_date: new FormControl(new Date(), [Validators.required]),
     createdby: new FormControl('Name Test', [Validators.required]),
-    requestby: new FormControl('', [Validators.required]),
-    operator_id: new FormControl('', [Validators.required]),
+    // requestby: new FormControl('', [Validators.required]),
+    // operator_id: new FormControl('', [Validators.required]),
     urgent_aw: new FormControl(false),
     urgent_film: new FormControl(false),
     urgent_normal: new FormControl(false),
@@ -64,9 +64,9 @@ export class TestAddnewJobComponent {
   });
 
   ngOnInit(): void {
-    this.getOperate();
-    this.getRequestby();
-    this.getGroup();
+    // this.getOperate();
+    // this.getRequestby();
+    // this.getGroup();
     const today = new Date();
   }
 
@@ -77,16 +77,16 @@ export class TestAddnewJobComponent {
     this.submitted = true;
 
     const jobspec = this.form.get('jobspec')?.value;
-    const dpcgroup =
-      this.selectedGroup || this.form.get('dpcgroup')?.value;
+    // const dpcgroup =
+    //   this.selectedGroup || this.form.get('dpcgroup')?.value;
     const status_order = this.form.get('status_order')?.value;
     const createdby = this.form.get('createdby')?.value;
     const working_date = this.form.get('working_date')?.value;
     const due_date = this.form.get('due_date')?.value;
-    const requestby =
-      this.selectedRequest || this.form.get('requestby')?.value;
-    const operator_id =
-      this.selectedOperator || this.form.get('operator_id')?.value;
+    // const requestby =
+    //   this.selectedRequest || this.form.get('requestby')?.value;
+    // const operator_id =
+    //   this.selectedOperator || this.form.get('operator_id')?.value;
     const urgent_aw = this.form.get('urgent_aw')?.value;
     const urgent_film = this.form.get('urgent_film')?.value;
     const urgent_normal = this.form.get('urgent_normal')?.value;
@@ -100,13 +100,13 @@ export class TestAddnewJobComponent {
 
     const body = JSON.stringify({
       jobspec: jobspec,
-      dpcgroup: dpcgroup,
+      // dpcgroup: dpcgroup,
       status_order: status_order,
       createdby: createdby,
       working_date: working_date,
       due_date: due_date,
-      requestby: requestby,
-      operator_id: operator_id,
+      // requestby: requestby,
+      // operator_id: operator_id,
       urgent_aw: urgent_aw,
       urgent_film: urgent_film,
       urgent_normal: urgent_normal,
@@ -162,63 +162,63 @@ export class TestAddnewJobComponent {
   }
 
   // TODO function getOperate
-  getOperate() {
-    this.getService
-      .GET('/api/operators')
-      .then((res: any) => {
-        // console.log(res);
-        this.operators = res;
-        this.filteredOperators = res;
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }
-  onSelectOperator(operator: string | null): void {
-    if (operator !== null) {
-      this.selectedOperator = operator;
-    }
-  }
+  // getOperate() {
+  //   this.getService
+  //     .GET('/api/operators')
+  //     .then((res: any) => {
+  //       // console.log(res);
+  //       this.operators = res;
+  //       this.filteredOperators = res;
+  //     })
+  //     .catch((err) => {
+  //       console.error(err);
+  //     });
+  // }
+  // onSelectOperator(operator: string | null): void {
+  //   if (operator !== null) {
+  //     this.selectedOperator = operator;
+  //   }
+  // }
 
   // TODO function getRequestby
-  getRequestby() {
-    this.getService
-      .GET('/api/requestby')
-      .then((res: any) => {
-        // console.log(res);
-        this.requests = res;
-        this.filteredRequest = res;
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }
+  // getRequestby() {
+  //   this.getService
+  //     .GET('/api/requestby')
+  //     .then((res: any) => {
+  //       // console.log(res);
+  //       this.requests = res;
+  //       this.filteredRequest = res;
+  //     })
+  //     .catch((err) => {
+  //       console.error(err);
+  //     });
+  // }
 
-  onSelectRequest(request: string | null): void {
-    if (request !== null) {
-      this.selectedRequest = request;
-    }
-  }
+  // onSelectRequest(request: string | null): void {
+  //   if (request !== null) {
+  //     this.selectedRequest = request;
+  //   }
+  // }
 
    // TODO function getGroup
-  getGroup() {
-    this.getService
-      .GET('/api/groupname')
-      .then((res: any) => {
-        // console.log(res);
-        this.groups = res;
-        this.filteredGroups = res;
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }
+  // getGroup() {
+  //   this.getService
+  //     .GET('/api/groupname')
+  //     .then((res: any) => {
+  //       // console.log(res);
+  //       this.groups = res;
+  //       this.filteredGroups = res;
+  //     })
+  //     .catch((err) => {
+  //       console.error(err);
+  //     });
+  // }
 
-  onSelectGroup(group: string | null): void {
-    if (group !== null) {
-      this.selectedGroup = group;
-    }
-  }
+  // onSelectGroup(group: string | null): void {
+  //   if (group !== null) {
+  //     this.selectedGroup = group;
+  //   }
+  // }
 
   onClose() {
     this.dialogRef.close();

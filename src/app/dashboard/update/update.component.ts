@@ -7,6 +7,7 @@ import { JobUpdateService } from 'src/app/__service/job-update.service';
 import { Router } from '@angular/router';
 import { GetService } from 'src/app/__service/get.service';
 import { SnackService } from 'src/app/__service/snack.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-update',
@@ -33,6 +34,8 @@ export class UpdateComponent implements OnInit {
   complete: boolean = true;
   color: ThemePalette = 'primary';
 
+  today: moment.Moment = moment();
+
   @Input() jobData: any;
   @Input() jobtype: any;
 
@@ -50,13 +53,13 @@ export class UpdateComponent implements OnInit {
     dpcno: new FormControl('', [Validators.minLength(1)]),
     jobspec: new FormControl('', [Validators.minLength(1)]),
     dpc_date: new FormControl('', [Validators.minLength(1)]),
-    dpcgroup: new FormControl('', [Validators.minLength(1)]),
+    // dpcgroup: new FormControl('', [Validators.minLength(1)]),
     status_order: new FormControl('', [Validators.minLength(1)]),
     working_date: new FormControl('', [Validators.required]),
-    due_date: new FormControl(''),
+    due_date: new FormControl('', [Validators.required]),
     createdby: new FormControl({ value: '', disabled: true }),
-    requestby: new FormControl('', [Validators.required]),
-    operator_id: new FormControl('', [Validators.required]),
+    // requestby: new FormControl('', [Validators.required]),
+    // operator_id: new FormControl('', [Validators.required]),
     urgent_aw: new FormControl(''),
     urgent_film: new FormControl(''),
     urgent_normal: new FormControl(''),
@@ -77,10 +80,10 @@ export class UpdateComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.getOperate();
-    this.getRequestby();
-    this.getGroup();
-    const today = new Date();
+    // this.getOperate();
+    // this.getRequestby();
+    // this.getGroup();
+    const today = moment();
     const jobtypeControl = this.form.get('jobtype');
     const quantityControl = this.form.get('quantity');
     if (this.data && this.data.jobData) {
@@ -93,13 +96,13 @@ export class UpdateComponent implements OnInit {
         dpcno: this.data.jobData.dpcno,
         jobspec: this.data.jobData.jobspec,
         dpc_date: this.data.jobData.dpc_date,
-        dpcgroup: this.data.jobData.dpcgroup,
+        // dpcgroup: this.data.jobData.dpcgroup,
         status_order: this.data.jobData.status_order,
         working_date: this.data.jobData.working_date,
         due_date: this.data.jobData.due_date,
         createdby: this.data.jobData.createdby,
-        requestby: this.data.jobData.requestby,
-        operator_id: this.data.jobData.operator_id,
+        // requestby: this.data.jobData.requestby,
+        // operator_id: this.data.jobData.operator_id,
         urgent_aw: this.data.jobData.urgent_aw,
         urgent_film: this.data.jobData.urgent_film,
         urgent_normal: this.data.jobData.urgent_normal,
@@ -141,82 +144,86 @@ export class UpdateComponent implements OnInit {
   }
 
   // TODO function getOperate
-  getOperate() {
-    this.getService
-      .GET('/api/operators')
-      .then((res: any) => {
-        // console.log("oper",res);
-        this.operators = res;
-        this.filteredOperators = res;
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }
+  // getOperate() {
+  //   this.getService
+  //     .GET('/api/operators')
+  //     .then((res: any) => {
+  //       // console.log("oper",res);
+  //       this.operators = res;
+  //       this.filteredOperators = res;
+  //     })
+  //     .catch((err) => {
+  //       console.error(err);
+  //     });
+  // }
 
-  onSelectOperator(operator: string | null): void {
-    if (operator !== null) {
-      this.selectedOperator = operator;
-    }
-  }
+  // onSelectOperator(operator: string | null): void {
+  //   if (operator !== null) {
+  //     this.selectedOperator = operator;
+  //   }
+  // }
 
   // TODO function getRequestby
-  getRequestby() {
-    this.getService
-      .GET('/api/requestby')
-      .then((res: any) => {
-        // console.log(res);
-        this.requests = res;
-        this.filteredRequest = res;
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }
+  // getRequestby() {
+  //   this.getService
+  //     .GET('/api/requestby')
+  //     .then((res: any) => {
+  //       // console.log(res);
+  //       this.requests = res;
+  //       this.filteredRequest = res;
+  //     })
+  //     .catch((err) => {
+  //       console.error(err);
+  //     });
+  // }
 
-  onSelectRequest(request: string | null): void {
-    if (request !== null) {
-      this.selectedRequest = request;
-    }
-  }
+  // onSelectRequest(request: string | null): void {
+  //   if (request !== null) {
+  //     this.selectedRequest = request;
+  //   }
+  // }
 
   // TODO function getGroup
-  getGroup() {
-    this.getService
-      .GET('/api/groupname')
-      .then((res: any) => {
-        // console.log(res);
-        this.groups = res;
-        this.filteredGroups = res;
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }
+  // getGroup() {
+  //   this.getService
+  //     .GET('/api/groupname')
+  //     .then((res: any) => {
+  //       // console.log(res);
+  //       this.groups = res;
+  //       this.filteredGroups = res;
+  //     })
+  //     .catch((err) => {
+  //       console.error(err);
+  //     });
+  // }
 
-  onSelectGroup(group: string | null): void {
-    if (group !== null) {
-      this.selectedGroup = group;
-    }
-  }
+  // onSelectGroup(group: string | null): void {
+  //   if (group !== null) {
+  //     this.selectedGroup = group;
+  //   }
+  // }
 
   onSave() {
     if (this.form.invalid) {
       return;
     }
     this.submitted = true;
+    const working_date = moment(this.form.get('working_date')?.value).format(
+      'YYYY-MM-DD'
+    );
+    const due_date = moment(this.form.get('due_date')?.value).format(
+      'YYYY-MM-DD'
+    );
     const dpcno = this.form.get('dpcno')?.value;
     const jobspec = this.form.get('jobspec')?.value;
     const dpc_date = this.form.get('dpc_date')?.value;
-    const dpcgroup = this.selectedGroup || this.form.get('dpcgroup')?.value;
+    // const dpcgroup = this.selectedGroup || this.form.get('dpcgroup')?.value;
     const status_order = this.form.get('status_order')?.value;
-    const working_date = this.form.get('working_date')?.value;
-    const due_date = this.form.get('due_date')?.value;
     const createdby = this.form.get('createdby')?.value;
-    const requestby = this.selectedRequest || this.form.get('requestby')?.value;
+    // const requestby = this.selectedRequest || this.form.get('requestby')?.value;
 
-    const operator_id =
-      this.selectedOperator || this.form.get('operator_id')?.value;
+    // const operator_id =
+    //   this.selectedOperator || this.form.get('operator_id')?.value;
     const urgent_aw = this.form.get('urgent_aw')?.value;
     const urgent_film = this.form.get('urgent_film')?.value;
     const urgent_normal = this.form.get('urgent_normal')?.value;
@@ -239,13 +246,13 @@ export class UpdateComponent implements OnInit {
       dpcno: dpcno,
       jobspec: jobspec,
       dpc_date: dpc_date,
-      dpcgroup: dpcgroup,
+      // dpcgroup: dpcgroup,
       status_order: status_order,
       working_date: working_date,
       due_date: due_date,
       createdby: createdby,
-      requestby: requestby,
-      operator_id: operator_id,
+      // requestby: requestby,
+      // operator_id: operator_id,
       urgent_aw: urgent_aw,
       urgent_film: urgent_film,
       urgent_normal: urgent_normal,

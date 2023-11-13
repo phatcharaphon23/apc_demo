@@ -1,0 +1,30 @@
+/* CSS */
+.content {
+    display: flex;
+    gap: 20px; /* ปรับระยะห่างตามความต้องการ */
+  }
+  
+  .customer-deteil-width {
+    flex: 1;
+  }
+  
+  /* ปรับขนาดของ textarea ให้ขนาดพอดี */
+  mat-form-field {
+    width: 100%; /* ทำให้ขยายตามขนาดของ .customer-deteil-width */
+  }
+  
+  textarea {
+    width: 100%; /* ทำให้ textarea ไม่ถูกขยาย */
+  }
+  
+  /* เพิ่ม CSS นี้เพื่อให้ปุ่ม "confirm" อยู่ในตำแหน่งที่ถูกต้อง */
+  .mat-dialog-actions {
+    margin-top: 10px; /* ปรับระยะห่างของ dialog actions ตามความต้องการ */
+  }
+  
+  .action {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px; /* ปรับระยะห่างของปุ่ม "confirm" ตามความต้องการ */
+  }
+  

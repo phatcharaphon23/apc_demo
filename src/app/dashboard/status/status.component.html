@@ -1,0 +1,44 @@
+<div mat-dialog-title>
+  <button
+    class="logo position-absolute end-0"
+    mat-icon-button
+    color="ready"
+    (click)="onClose()"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+  <p>status job</p>
+  <div class="option-content">
+    <mat-chip-listbox aria-label="Fish selection">
+      <mat-chip-option>Start</mat-chip-option>
+      <mat-chip-option color="accent" >Finish</mat-chip-option>
+      <mat-chip-option color="accent" selected>Complete</mat-chip-option>
+      <mat-chip-option color="warn">Cancel</mat-chip-option>
+    </mat-chip-listbox>
+  </div>
+  <div class="status-content">
+    <mat-form-field appearance="outline">
+        <mat-label>Finish Date</mat-label>
+        <input
+          matInput
+          [matDatepicker]="dp"
+
+          [readonly]="true"
+        />
+        <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="dp"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #dp></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Total Correction</mat-label>
+        <input matInput  />
+      </mat-form-field>
+  </div>
+</div>
+
+<div mat-dialog-actions align="end" class="action">
+  <button mat-raised-button color="primary">confirm</button>
+</div>
