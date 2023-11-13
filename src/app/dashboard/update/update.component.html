@@ -169,7 +169,7 @@
                   [readonly]="true"
                   (dateInput)="onDueDateInput($event)"
                 />
-                <mat-hint>{{ dueDateHint }}</mat-hint>
+                <mat-hint [ngStyle]="{ 'color': 'red' }">{{ dueDateHint }}</mat-hint>
                 <mat-datepicker-toggle
                   matIconSuffix
                   [for]="datepicker03"

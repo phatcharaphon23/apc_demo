@@ -13,6 +13,7 @@ import { JobUpdateService } from 'src/app/__service/job-update.service';
 import { Router } from '@angular/router';
 import { GetService } from 'src/app/__service/get.service';
 import { SnackService } from 'src/app/__service/snack.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-test-addnew-job',
@@ -70,12 +71,32 @@ export class TestAddnewJobComponent {
     const today = new Date();
   }
 
+  dueDateHint: string = '';
+  onDueDateInput(event: MatDatepickerInputEvent<Date>) {
+    const workingDate = this.form.get('working_date')?.value;
+    const dueDate = event.value;
+  
+    if (moment(dueDate).isBefore(workingDate)) {
+      this.dueDateHint = 'Due date cannot be before working date';
+      
+    } else {
+      this.dueDateHint = '';
+    }
+  }
+
   onSave() {
     if (this.form.invalid) {
       return;
     }
     this.submitted = true;
-
+    const dueDate = this.form.get('due_date')?.value;
+    const workingDate = this.form.get('working_date')?.value;
+  
+    if (moment(dueDate).isBefore(workingDate)) {
+      console.log('Due Date must be on or after Working Date');
+      this.submitted = false; 
+      return;
+    }
     const jobspec = this.form.get('jobspec')?.value;
     // const dpcgroup =
     //   this.selectedGroup || this.form.get('dpcgroup')?.value;

@@ -34,7 +34,6 @@ export class UpdateComponent implements OnInit {
   finish: boolean = true;
   complete: boolean = true;
   color: ThemePalette = 'primary';
-  
   today: moment.Moment = moment();
 
   @Input() jobData: any;
@@ -219,6 +218,7 @@ export class UpdateComponent implements OnInit {
   
     if (moment(dueDate).isBefore(workingDate)) {
       this.dueDateHint = 'Due date cannot be before working date';
+      
     } else {
       this.dueDateHint = '';
     }
@@ -239,7 +239,7 @@ export class UpdateComponent implements OnInit {
   
     if (moment(dueDate).isBefore(workingDate)) {
       console.log('Due Date must be on or after Working Date');
-      this.submitted = false; // ตั้งค่าเป็น false เพื่อให้ผู้ใช้ทำการแก้ไขข้อมูล
+      this.submitted = false; 
       return;
     }
     const dpcno = this.form.get('dpcno')?.value;

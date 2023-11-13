@@ -43,7 +43,6 @@
         <table class="example-full-width">
           <tr>
             <td>
-
               <!-- <mat-form-field appearance="outline">
                 <mat-label>Request By</mat-label>
                 <mat-select
@@ -86,7 +85,6 @@
                   formControlName="working_date"
                   [readonly]="true"
                 />
-                <mat-hint>MM/DD/YYYY</mat-hint>
                 <mat-datepicker-toggle
                   matIconSuffix
                   [for]="datepicker02"
@@ -134,8 +132,9 @@
                   [matDatepicker]="datepicker03"
                   formControlName="due_date"
                   [readonly]="true"
+                  (dateInput)="onDueDateInput($event)"
                 />
-                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-hint [ngStyle]="{ 'color': 'red' }">{{ dueDateHint }}</mat-hint>
                 <mat-datepicker-toggle
                   matIconSuffix
                   [for]="datepicker03"
