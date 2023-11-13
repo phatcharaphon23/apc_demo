@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { GetService } from 'src/app/__service/get.service';
 import { SnackService } from 'src/app/__service/snack.service';
 import * as moment from 'moment';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-update',
@@ -33,7 +34,7 @@ export class UpdateComponent implements OnInit {
   finish: boolean = true;
   complete: boolean = true;
   color: ThemePalette = 'primary';
-
+  
   today: moment.Moment = moment();
 
   @Input() jobData: any;
@@ -86,6 +87,15 @@ export class UpdateComponent implements OnInit {
     const today = moment();
     const jobtypeControl = this.form.get('jobtype');
     const quantityControl = this.form.get('quantity');
+    this.form.get('due_date')?.valueChanges.subscribe((dueDate) => {
+      const workingDate = moment(this.form.get('working_date')?.value);
+  
+      if (moment(dueDate).isBefore(workingDate)) {
+        console.log('Due Date must be on or after Working Date');
+        // ทำสิ่งที่คุณต้องการเมื่อตรวจสอบไม่ผ่าน
+        // เช่น แสดงข้อความผิดพลาดหรือทำการปรับปรุง UI ตามที่คุณต้องการ
+      }
+    });
     if (this.data && this.data.jobData) {
       this.form.get('jobtype')?.valueChanges.subscribe((value) => {
         this.form.get('design')?.setValue(value === 'design' ? 'Y' : 'N');
@@ -202,7 +212,17 @@ export class UpdateComponent implements OnInit {
   //     this.selectedGroup = group;
   //   }
   // }
-
+  dueDateHint: string = '';
+  onDueDateInput(event: MatDatepickerInputEvent<Date>) {
+    const workingDate = this.form.get('working_date')?.value;
+    const dueDate = event.value;
+  
+    if (moment(dueDate).isBefore(workingDate)) {
+      this.dueDateHint = 'Due date cannot be before working date';
+    } else {
+      this.dueDateHint = '';
+    }
+  }
   onSave() {
     if (this.form.invalid) {
       return;
@@ -214,6 +234,14 @@ export class UpdateComponent implements OnInit {
     const due_date = moment(this.form.get('due_date')?.value).format(
       'YYYY-MM-DD'
     );
+    const dueDate = this.form.get('due_date')?.value;
+    const workingDate = this.form.get('working_date')?.value;
+  
+    if (moment(dueDate).isBefore(workingDate)) {
+      console.log('Due Date must be on or after Working Date');
+      this.submitted = false; // ตั้งค่าเป็น false เพื่อให้ผู้ใช้ทำการแก้ไขข้อมูล
+      return;
+    }
     const dpcno = this.form.get('dpcno')?.value;
     const jobspec = this.form.get('jobspec')?.value;
     const dpc_date = this.form.get('dpc_date')?.value;
