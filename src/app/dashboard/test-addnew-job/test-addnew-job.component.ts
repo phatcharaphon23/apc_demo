@@ -24,15 +24,15 @@ export class TestAddnewJobComponent {
   submitted: boolean = false;
   jobtypes: string[] = ['design quantity', 'composing a/w', 'ready made a/w'];
   operators: string[] = [];
-  filteredOperators: { employee_id: string, username: string }[] = [];
+  filteredOperators: { employee_id: string; username: string }[] = [];
   selectedOperator: string = '';
 
   requests: string[] = [];
-  filteredRequest: { employee_id: string, username: string }[] = [];
+  filteredRequest: { employee_id: string; username: string }[] = [];
   selectedRequest: string = '';
 
   groups: string[] = [];
-  filteredGroups: { group_id: string, group_name: string }[] = [];
+  filteredGroups: { group_id: string; group_name: string }[] = [];
   selectedGroup: string = '';
 
   constructor(
@@ -79,11 +79,24 @@ export class TestAddnewJobComponent {
   
     if (moment(dueDate).isBefore(workingDate)) {
       this.dueDateHint = 'Due date cannot be before working date';
-      
     } else {
       this.dueDateHint = '';
     }
   }
+  
+  onWorkingDateInput(event: MatDatepickerInputEvent<Date>) {
+    const workingDate = event.value;
+    const dueDate = this.form.get('due_date')?.value;
+  
+    if (moment(dueDate).isBefore(workingDate)) {
+      this.dueDateHint = 'Due date cannot be before working date';
+    } else {
+      this.dueDateHint = '';
+    }
+  }
+  
+  
+  
 
   onSave() {
     if (this.form.invalid) {
@@ -92,10 +105,16 @@ export class TestAddnewJobComponent {
     this.submitted = true;
     const dueDate = this.form.get('due_date')?.value;
     const workingDate = this.form.get('working_date')?.value;
-  
+
     if (moment(dueDate).isBefore(workingDate)) {
       console.log('Due Date must be on or after Working Date');
-      this.submitted = false; 
+      this.submitted = false;
+      return;
+    }
+    // เพิ่มเงื่อนไขเพิ่มเติมที่ตรวจสอบว่า working_date ไม่มากกว่า due_date
+    if (moment(workingDate).isAfter(dueDate)) {
+      console.log('Working Date must be on or before Due Date');
+      this.submitted = false;
       return;
     }
     const jobspec = this.form.get('jobspec')?.value;
@@ -162,9 +181,9 @@ export class TestAddnewJobComponent {
     const compos_awControl = this.form.get('compos_aw');
     const ready_awControl = this.form.get('ready_aw');
     const quantityControl = this.form.get('quantity'); // เพิ่ม control สำหรับ quantity
-  
+
     jobtypeControl?.setValue(jobtype);
-  
+
     switch (jobtype) {
       case 'design':
         designControl?.setValue('Y');
@@ -178,7 +197,7 @@ export class TestAddnewJobComponent {
         ready_awControl?.setValue('N');
         quantityControl?.disable(); // Disable quantity input
         // รีเซตค่า quantity เมื่อไม่เลือก design
-        quantityControl?.setValue(''); 
+        quantityControl?.setValue('');
         break;
       case 'ready_aw':
         designControl?.setValue('N');
@@ -186,16 +205,12 @@ export class TestAddnewJobComponent {
         ready_awControl?.setValue('Y');
         quantityControl?.disable(); // Disable quantity input
         // รีเซตค่า quantity เมื่อไม่เลือก design
-        quantityControl?.setValue(''); 
+        quantityControl?.setValue('');
         break;
       default:
         break;
     }
   }
-  
-  
-  
-  
 
   // TODO function getOperate
   // getOperate() {
@@ -236,7 +251,7 @@ export class TestAddnewJobComponent {
   //   }
   // }
 
-   // TODO function getGroup
+  // TODO function getGroup
   // getGroup() {
   //   this.getService
   //     .GET('/api/groupname')

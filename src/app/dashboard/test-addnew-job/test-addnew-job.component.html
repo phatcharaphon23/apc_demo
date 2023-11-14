@@ -84,14 +84,14 @@
                   [matDatepicker]="datepicker02"
                   formControlName="working_date"
                   [readonly]="true"
+                  (dateInput)="onWorkingDateInput($event)"
                 />
-                <mat-datepicker-toggle
-                  matIconSuffix
-                  [for]="datepicker02"
-                ></mat-datepicker-toggle>
+                <mat-hint [ngStyle]="{ color: 'red' }">{{ dueDateHint }}</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="datepicker02"></mat-datepicker-toggle>
                 <mat-datepicker #datepicker02></mat-datepicker>
               </mat-form-field>
             </div>
+            
           </tr>
           <tr>
             <!-- dpc group -->
