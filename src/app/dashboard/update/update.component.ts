@@ -217,7 +217,17 @@ export class UpdateComponent implements OnInit {
   
     if (moment(dueDate).isBefore(workingDate)) {
       this.dueDateHint = 'Due date cannot be before working date';
-      
+    } else {
+      this.dueDateHint = '';
+    }
+  }
+  
+  onWorkingDateInput(event: MatDatepickerInputEvent<Date>) {
+    const workingDate = event.value;
+    const dueDate = this.form.get('due_date')?.value;
+  
+    if (moment(dueDate).isBefore(workingDate)) {
+      this.dueDateHint = 'Due date cannot be before working date';
     } else {
       this.dueDateHint = '';
     }
@@ -239,6 +249,11 @@ export class UpdateComponent implements OnInit {
     if (moment(dueDate).isBefore(workingDate)) {
       console.log('Due Date must be on or after Working Date');
       this.submitted = false; 
+      return;
+    }
+    if (moment(workingDate).isAfter(dueDate)) {
+      console.log('Working Date must be on or before Due Date');
+      this.submitted = false;
       return;
     }
     const dpcno = this.form.get('dpcno')?.value;
