@@ -111,7 +111,7 @@ export class TestAddnewJobComponent {
       this.submitted = false;
       return;
     }
-    // เพิ่มเงื่อนไขเพิ่มเติมที่ตรวจสอบว่า working_date ไม่มากกว่า due_date
+
     if (moment(workingDate).isAfter(dueDate)) {
       console.log('Working Date must be on or before Due Date');
       this.submitted = false;
@@ -169,6 +169,8 @@ export class TestAddnewJobComponent {
       })
       .catch((err) => {
         console.log(err);
+        this.snackBar.CustomSnackBar('Error add job', 3000, 'error');
+        
       })
       .finally(() => {
         this.submitted = false;

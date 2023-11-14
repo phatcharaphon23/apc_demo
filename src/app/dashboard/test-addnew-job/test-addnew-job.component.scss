@@ -65,5 +65,23 @@ td {
   margin: 5px;
 }
 
+.example-section p {
+  margin-bottom: 0.5vw; /* ปรับความห่างระหว่างแต่ละ checkbox ตามความกว้างของ viewport */
+}
 
+.example-section h4 {
+  color: #40376E; /* กำหนดสีตามที่คุณต้องการ */
+}
 
+.example-radio-button {
+  color: your_desired_color; /* กำหนดสีตามที่คุณต้องการ */
+}
+
+.bold-text {
+  font-weight: bold;
+}
+
+.normal-text {
+  font-weight: normal;
+}
+// #40376E, #FFD6BA, #FAF9F9, #BEE3DB, #89B0AE

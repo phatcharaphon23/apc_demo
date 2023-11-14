@@ -47,6 +47,7 @@ td {
 .example-section {
   display: flex;
   flex-direction: column;
+  // margin-bottom: 1vw;
 }
 
 .example-margin {
@@ -69,5 +70,25 @@ td {
   margin: 5px;
 }
 
+.example-section p {
+  margin-bottom: 0.5vw; /* ปรับความห่างระหว่างแต่ละ checkbox ตามความกว้างของ viewport */
+}
+.bold-text {
+  font-weight: bold;
+}
+
+.normal-text {
+  font-weight: normal;
+}
+
+.custom-button {
+  background-color: #0F8B8D; /* สีที่คุณต้องการ */
+  color: white; /* หรือสีตัวอักษรที่คุณต้องการ */
+  &:hover {
+    background-color: #143642; /* สีที่คุณต้องการเมื่อโฮเวอร์ */
+  }
+}
+
+// #40376E, #FFD6BA, #FAF9F9, #BEE3DB, #89B0AE
 
 

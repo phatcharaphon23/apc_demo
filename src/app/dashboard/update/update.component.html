@@ -1,5 +1,7 @@
 <div mat-dialog-title>
-  <span><i class="material-icons">edit_note</i>Edit JOB</span>
+  <span class="example-margin bold-text" style="color: #0f8b8d"
+    ><i class="material-icons">edit_note</i>Edit JOB</span
+  >
   <button
     class="logo position-absolute end-0"
     mat-icon-button
@@ -121,8 +123,13 @@
                   [readonly]="true"
                   (dateInput)="onWorkingDateInput($event)"
                 />
-                <mat-hint [ngStyle]="{ color: 'red' }">{{ dueDateHint }}</mat-hint>
-                <mat-datepicker-toggle matIconSuffix [for]="datepicker02"></mat-datepicker-toggle>
+                <mat-hint [ngStyle]="{ color: 'red' }">{{
+                  dueDateHint
+                }}</mat-hint>
+                <mat-datepicker-toggle
+                  matIconSuffix
+                  [for]="datepicker02"
+                ></mat-datepicker-toggle>
                 <mat-datepicker #datepicker02></mat-datepicker>
               </mat-form-field>
             </div>
@@ -168,7 +175,9 @@
                   [readonly]="true"
                   (dateInput)="onDueDateInput($event)"
                 />
-                <mat-hint [ngStyle]="{ 'color': 'red' }">{{ dueDateHint }}</mat-hint>
+                <mat-hint [ngStyle]="{ color: 'red' }">{{
+                  dueDateHint
+                }}</mat-hint>
                 <mat-datepicker-toggle
                   matIconSuffix
                   [for]="datepicker03"
@@ -181,8 +190,8 @@
         <div class="select-style">
           <!-- SPECIAL DESCRIPTION FROM -->
           <section class="example-section">
-            <h4 class="example-margin" style="color: black">
-              Select your special description:
+            <h4 class="example-margin bold-text" style="color: #0f8b8d">
+              Special description:
             </h4>
             <p>
               <mat-checkbox formControlName="urgent_normal"
@@ -202,7 +211,9 @@
           </section>
           <!-- JOBTYPE FROM -->
           <section class="example-section">
-            <h4 class="example-margin" style="color: black">Job Type:</h4>
+            <h4 class="example-margin bold-text" style="color: #0f8b8d">
+              Job type:
+            </h4>
             <mat-radio-group formControlName="jobtype">
               <p>
                 <mat-radio-button class="example-radio-button" value="design"
@@ -226,7 +237,9 @@
 
         <table>
           <!-- For update job -->
-          <h4 style="color: black">Detail For Update:</h4>
+          <h4 class="example-margin bold-text" style="color: #0f8b8d">
+            Detail for update:
+          </h4>
 
           <tr>
             <!-- finish job -->
@@ -235,7 +248,7 @@
                 <mat-checkbox
                   formControlName="finish"
                   (change)="onFinish($event)"
-                  >finish</mat-checkbox
+                  >Finish</mat-checkbox
                 >
               </p>
             </td>
@@ -272,7 +285,7 @@
                 <mat-checkbox
                   formControlName="complete"
                   (change)="onComplete($event)"
-                  >complete</mat-checkbox
+                  >Complete</mat-checkbox
                 >
               </p>
             </td>
@@ -309,5 +322,7 @@
 </div>
 
 <div mat-dialog-actions align="end" class="action">
-  <button mat-raised-button color="primary" (click)="onSave()">Save</button>
+  <button mat-raised-button class="custom-button" (click)="onSave()">
+    Save
+  </button>
 </div>

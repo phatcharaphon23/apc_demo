@@ -324,6 +324,7 @@ export class UpdateComponent implements OnInit {
       })
       .catch((err) => {
         console.log(err);
+        this.snackBar.CustomSnackBar('Error updating job', 3000, 'error');
       })
       .finally(() => {
         this.submitted = false;

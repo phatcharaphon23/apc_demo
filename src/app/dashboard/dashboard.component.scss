@@ -3,7 +3,7 @@
   background: whitesmoke;
   &__box {
     min-height: 140px;
-    background: rgba(169, 158, 223, 0.519);
+    background: #BEE3DB;
     margin: 0 -1rem;
     // font-size: medium;
     .mat-icon-button {
@@ -23,6 +23,15 @@
     }
   }
 }
+.custom-button {
+  background-color: #143642 !important; /* สีที่คุณต้องการ */
+  color: white !important; /* หรือสีตัวอักษรที่คุณต้องการ */
+}
+
+.custom-button:hover {
+  background-color: #0f8b8d !important; /* สีที่คุณต้องการเมื่อโฮเวอร์ */
+}
+
 
 
 @media print {
@@ -170,9 +179,7 @@ button {
   height: 40%; /* กำหนดความกว้าง */
 }
 
-.mat-label {
-  color: #555; /* กำหนดสีของข้อความ Label */
-}
+
 
 .mat-input-element {
   // background-color: #f9f9f9; /* กำหนดสีพื้นหลังของ Input */
