@@ -91,8 +91,7 @@ export class UpdateComponent implements OnInit {
   
       if (moment(dueDate).isBefore(workingDate)) {
         console.log('Due Date must be on or after Working Date');
-        // ทำสิ่งที่คุณต้องการเมื่อตรวจสอบไม่ผ่าน
-        // เช่น แสดงข้อความผิดพลาดหรือทำการปรับปรุง UI ตามที่คุณต้องการ
+
       }
     });
     if (this.data && this.data.jobData) {
@@ -149,7 +148,7 @@ export class UpdateComponent implements OnInit {
         quantityControl?.disable();
       }
     });
-    console.log('UpdateComponent', this.jobData);
+    // console.log('UpdateComponent', this.jobData);
   }
 
   // TODO function getOperate

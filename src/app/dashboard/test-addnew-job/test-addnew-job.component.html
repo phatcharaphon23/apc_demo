@@ -134,7 +134,9 @@
                   [readonly]="true"
                   (dateInput)="onDueDateInput($event)"
                 />
-                <mat-hint [ngStyle]="{ 'color': 'red' }">{{ dueDateHint }}</mat-hint>
+                <mat-hint [ngStyle]="{ color: 'red' }">{{
+                  dueDateHint
+                }}</mat-hint>
                 <mat-datepicker-toggle
                   matIconSuffix
                   [for]="datepicker03"
@@ -169,27 +171,37 @@
 
           <!-- JOBTYPE FROM -->
           <section class="example-section">
-            <h4 class="example-margin" style="color: black" color="primary">
-              Job Type:
-            </h4>
-            <mat-radio-group
-              aria-labelledby="example-radio-group-label"
-              class="example-radio-group"
-            >
-              <mat-radio-button
-                class="example-radio-button"
-                *ngFor="let jobtype of jobtypes"
-                [value]="jobtype"
-                (click)="selectjobType(jobtype)"
-              >
-                {{ jobtype }}
-              </mat-radio-button>
+            <h4 class="example-margin" style="color: black">Job Type:</h4>
+            <mat-radio-group formControlName="jobtype">
+              <p>
+                <mat-radio-button
+                  class="example-radio-button"
+                  value="design"
+                  (click)="selectjobType('design')"
+                  >Design Quantity</mat-radio-button
+                >
+                <input
+                  *ngIf="form.get('jobtype')?.value === 'design'"
+                  formControlName="quantity"
+                />
+              </p>
+              <p>
+                <mat-radio-button
+                  class="example-radio-button"
+                  value="compos_aw"
+                  (click)="selectjobType('compos_aw')"
+                  >Composing A/W</mat-radio-button
+                >
+              </p>
+              <p>
+                <mat-radio-button
+                  class="example-radio-button"
+                  value="ready_aw"
+                  (click)="selectjobType('ready_aw')"
+                  >Ready Made A/W</mat-radio-button
+                >
+              </p>
             </mat-radio-group>
-
-            <div class="example-margin">
-              <label for="quantity">Quantity:</label>
-              <input type="number" id="quantity" formControlName="quantity" />
-            </div>
           </section>
         </div>
       </form>

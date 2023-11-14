@@ -55,12 +55,13 @@ export class TestAddnewJobComponent {
     urgent_aw: new FormControl(false),
     urgent_film: new FormControl(false),
     urgent_normal: new FormControl(false),
-    design: new FormControl('', [Validators.required]),
-    compos_aw: new FormControl('', [Validators.required]),
-    ready_aw: new FormControl('', [Validators.required]),
+    design: new FormControl(''),
+    compos_aw: new FormControl(''),
+    ready_aw: new FormControl(''),
     custcode: new FormControl('', [Validators.required]),
     customer_name: new FormControl('', [Validators.required]),
     productname: new FormControl('', [Validators.required]),
+    jobtype: new FormControl('', [Validators.required]),
     quantity: new FormControl({ value: '', disabled: true }),
   });
 
@@ -156,31 +157,45 @@ export class TestAddnewJobComponent {
   }
 
   selectjobType(jobtype: string) {
+    const jobtypeControl = this.form.get('jobtype');
+    const designControl = this.form.get('design');
+    const compos_awControl = this.form.get('compos_aw');
+    const ready_awControl = this.form.get('ready_aw');
+    const quantityControl = this.form.get('quantity'); // เพิ่ม control สำหรับ quantity
+  
+    jobtypeControl?.setValue(jobtype);
+  
     switch (jobtype) {
-      case 'design quantity':
-        this.form.get('design')?.setValue('Y');
-        this.form.get('compos_aw')?.setValue('N');
-        this.form.get('ready_aw')?.setValue('N');
-        this.form.get('quantity')?.enable();
+      case 'design':
+        designControl?.setValue('Y');
+        compos_awControl?.setValue('N');
+        ready_awControl?.setValue('N');
+        quantityControl?.enable(); // Enable quantity input
         break;
-      case 'composing a/w':
-        this.form.get('design')?.setValue('N');
-        this.form.get('compos_aw')?.setValue('Y');
-        this.form.get('ready_aw')?.setValue('N');
-        this.form.get('quantity')?.disable();
-        this.form.get('quantity')?.reset();
+      case 'compos_aw':
+        designControl?.setValue('N');
+        compos_awControl?.setValue('Y');
+        ready_awControl?.setValue('N');
+        quantityControl?.disable(); // Disable quantity input
+        // รีเซตค่า quantity เมื่อไม่เลือก design
+        quantityControl?.setValue(''); 
         break;
-      case 'ready made a/w':
-        this.form.get('design')?.setValue('N');
-        this.form.get('compos_aw')?.setValue('N');
-        this.form.get('ready_aw')?.setValue('Y');
-        this.form.get('quantity')?.disable();
-        this.form.get('quantity')?.reset();
+      case 'ready_aw':
+        designControl?.setValue('N');
+        compos_awControl?.setValue('N');
+        ready_awControl?.setValue('Y');
+        quantityControl?.disable(); // Disable quantity input
+        // รีเซตค่า quantity เมื่อไม่เลือก design
+        quantityControl?.setValue(''); 
         break;
       default:
         break;
     }
   }
+  
+  
+  
+  
 
   // TODO function getOperate
   // getOperate() {
