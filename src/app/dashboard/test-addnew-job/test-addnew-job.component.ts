@@ -35,14 +35,19 @@ export class TestAddnewJobComponent {
   filteredGroups: { group_id: string; group_name: string }[] = [];
   selectedGroup: string = '';
 
+  isUrgentAW: boolean = false;
+  isUrgentFilm: boolean = false;
+  isUrgentNormal: boolean = false;
+
   constructor(
     private jobUpdateService: JobUpdateService,
     private http: HttpService,
     private getService: GetService,
     private snackBar: SnackService,
-    private dialogRef: MatDialogRef<TestAddnewJobComponent> // private datePipe: DatePipe,
+    private dialogRef: MatDialogRef<TestAddnewJobComponent>
   ) {}
 
+  // TODO from
   form = new FormGroup({
     jobspec: new FormControl('', [Validators.required]),
     // dpcgroup: new FormControl('', [Validators.required]),
@@ -72,37 +77,55 @@ export class TestAddnewJobComponent {
     const today = new Date();
   }
 
+  // Inside your component class
+  onCheckboxChange(event: any, controlName: string) {
+    const isChecked = event.checked;
+
+    switch (controlName) {
+      case 'urgent_aw':
+        this.isUrgentAW = isChecked;
+        break;
+      case 'urgent_film':
+        this.isUrgentFilm = isChecked;
+        break;
+      case 'urgent_normal':
+        this.isUrgentNormal = isChecked;
+        break;
+      // เพิ่ม case ตามความต้องการ
+    }
+  }
+
+  // TODO condition isBefore date
   dueDateHint: string = '';
   onDueDateInput(event: MatDatepickerInputEvent<Date>) {
     const workingDate = this.form.get('working_date')?.value;
     const dueDate = event.value;
-  
+
     if (moment(dueDate).isBefore(workingDate)) {
       this.dueDateHint = 'Due date cannot be before working date';
     } else {
       this.dueDateHint = '';
     }
   }
-  
+
   onWorkingDateInput(event: MatDatepickerInputEvent<Date>) {
     const workingDate = event.value;
     const dueDate = this.form.get('due_date')?.value;
-  
+
     if (moment(dueDate).isBefore(workingDate)) {
       this.dueDateHint = 'Due date cannot be before working date';
     } else {
       this.dueDateHint = '';
     }
   }
-  
-  
-  
 
+  // TODO fuction save
   onSave() {
     if (this.form.invalid) {
       return;
     }
     this.submitted = true;
+
     const dueDate = this.form.get('due_date')?.value;
     const workingDate = this.form.get('working_date')?.value;
 
@@ -128,9 +151,12 @@ export class TestAddnewJobComponent {
     //   this.selectedRequest || this.form.get('requestby')?.value;
     // const operator_id =
     //   this.selectedOperator || this.form.get('operator_id')?.value;
-    const urgent_aw = this.form.get('urgent_aw')?.value;
-    const urgent_film = this.form.get('urgent_film')?.value;
-    const urgent_normal = this.form.get('urgent_normal')?.value;
+    // const urgent_aw = this.form.get('urgent_aw')?.value;
+    // const urgent_film = this.form.get('urgent_film')?.value;
+    // const urgent_normal = this.form.get('urgent_normal')?.value;
+    const urgent_aw = this.isUrgentAW ? 'Y' : 'N';
+    const urgent_film = this.isUrgentFilm ? 'Y' : 'N';
+    const urgent_normal = this.isUrgentNormal ? 'Y' : 'N';
     const design = this.form.get('design')?.value;
     const compos_aw = this.form.get('compos_aw')?.value;
     const ready_aw = this.form.get('ready_aw')?.value;
@@ -163,26 +189,25 @@ export class TestAddnewJobComponent {
     this.http
       .POST('/api/add_dpc', body)
       .then((res: any) => {
-        // console.log(res);
         this.snackBar.CustomSnackBar('Add job successful', 3000, 'success');
         this.onClose();
       })
       .catch((err) => {
         console.log(err);
         this.snackBar.CustomSnackBar('Error add job', 3000, 'error');
-        
       })
       .finally(() => {
         this.submitted = false;
       });
   }
 
+  // TODO  selectjobType
   selectjobType(jobtype: string) {
     const jobtypeControl = this.form.get('jobtype');
     const designControl = this.form.get('design');
     const compos_awControl = this.form.get('compos_aw');
     const ready_awControl = this.form.get('ready_aw');
-    const quantityControl = this.form.get('quantity'); // เพิ่ม control สำหรับ quantity
+    const quantityControl = this.form.get('quantity');
 
     jobtypeControl?.setValue(jobtype);
 
@@ -191,22 +216,22 @@ export class TestAddnewJobComponent {
         designControl?.setValue('Y');
         compos_awControl?.setValue('N');
         ready_awControl?.setValue('N');
-        quantityControl?.enable(); // Enable quantity input
+        quantityControl?.enable();
         break;
       case 'compos_aw':
         designControl?.setValue('N');
         compos_awControl?.setValue('Y');
         ready_awControl?.setValue('N');
-        quantityControl?.disable(); // Disable quantity input
-        // รีเซตค่า quantity เมื่อไม่เลือก design
+        quantityControl?.disable();
+
         quantityControl?.setValue('');
         break;
       case 'ready_aw':
         designControl?.setValue('N');
         compos_awControl?.setValue('N');
         ready_awControl?.setValue('Y');
-        quantityControl?.disable(); // Disable quantity input
-        // รีเซตค่า quantity เมื่อไม่เลือก design
+        quantityControl?.disable();
+
         quantityControl?.setValue('');
         break;
       default:

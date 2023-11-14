@@ -155,21 +155,25 @@
         <div class="select-style">
           <!-- SPECIAL DESCRIPTION FROM -->
           <section class="example-section">
-            <h4 class="example-margin bold-text" style="color: #0F8B8D">
+            <h4 class="example-margin bold-text" style="color: #0f8b8d">
               Special description:
             </h4>
             <p>
-              <mat-checkbox formControlName="urgent_normal"
+              <mat-checkbox
+                formControlName="urgent_normal"
+                (change)="onCheckboxChange($event, 'urgent_normal')"
                 >Normal</mat-checkbox
               >
             </p>
             <p>
               <mat-checkbox formControlName="urgent_aw"
+              (change)="onCheckboxChange($event, 'urgent_aw')"
                 >Urgent A/W</mat-checkbox
               >
             </p>
             <p>
               <mat-checkbox formControlName="urgent_film"
+              (change)="onCheckboxChange($event, 'urgent_film')"
                 >Urgent FILM</mat-checkbox
               >
             </p>
@@ -177,7 +181,7 @@
 
           <!-- JOBTYPE FROM -->
           <section class="example-section">
-            <h4 class="example-margin bold-text" style="color: #0F8B8D">
+            <h4 class="example-margin bold-text" style="color: #0f8b8d">
               Job type:
             </h4>
             <mat-radio-group formControlName="jobtype">

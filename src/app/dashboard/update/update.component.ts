@@ -210,6 +210,16 @@ export class UpdateComponent implements OnInit {
   //     this.selectedGroup = group;
   //   }
   // }
+  onCheckboxChange(event: any, controlName: string) {
+    const isChecked = event.checked;
+    const control = this.form.get(controlName);
+  
+    if (control) {
+      control.setValue(isChecked ? 'Y' : 'N');
+    }
+  }
+  
+
   dueDateHint: string = '';
   onDueDateInput(event: MatDatepickerInputEvent<Date>) {
     const workingDate = this.form.get('working_date')?.value;

@@ -194,17 +194,21 @@
               Special description:
             </h4>
             <p>
-              <mat-checkbox formControlName="urgent_normal"
+              <mat-checkbox
+                formControlName="urgent_normal"
+                (change)="onCheckboxChange($event, 'urgent_normal')"
                 >Normal</mat-checkbox
               >
             </p>
             <p>
               <mat-checkbox formControlName="urgent_aw"
+              (change)="onCheckboxChange($event, 'urgent_aw')"
                 >Urgent A/W</mat-checkbox
               >
             </p>
             <p>
               <mat-checkbox formControlName="urgent_film"
+              (change)="onCheckboxChange($event, 'urgent_film')"
                 >Urgent FILM</mat-checkbox
               >
             </p>
