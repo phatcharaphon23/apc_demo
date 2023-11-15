@@ -34,14 +34,7 @@
       <p>REQUEST BY : {{ jobData?.requestby }}</p>
     </div>
   </div>
-  <div class="row g-0">
-    <div class="col-sm-6 col-md-8">
-      <p>CUSTOMER CODE : {{ jobData?.custcode }}</p>
-    </div>
-    <div class="col-6 col-md-4">
-      <p>STATUS : {{ jobData?.status_order }}</p>
-    </div>
-  </div>
+  
   <div class="row">
     <div class="col">
       <p>DUE DAT : {{ jobData?.due_date | date : "dd LLLL yyyy" }}</p>

@@ -1,0 +1,34 @@
+<div mat-dialog-title>
+    <!-- <span>UPDATE STATUS</span> -->
+    <button
+      class="logo position-absolute end-0"
+      mat-icon-button
+      color="ready"
+      (click)="onClose()"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+    <div mat-dialog-content class="content">
+      <form [formGroup]="form">
+        <div class="text-dpcno">
+          <span>DPC NO : {{ form.get("dpcno")?.value }}</span>
+        </div>
+        <mat-form-field appearance="outline">
+          <mat-label>Status Job </mat-label>
+          <input matInput formControlName="state" readonly="true"/>
+        </mat-form-field>
+  
+        <div>
+          <mat-form-field appearance="outline">
+            <mat-label>Cancel content</mat-label>
+            <textarea matInput formControlName="cancel_content"></textarea>
+          </mat-form-field>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <div mat-dialog-actions align="end" class="action">
+    <button mat-raised-button color="primary" (click)="onSave()">confirm</button>
+  </div>
+  

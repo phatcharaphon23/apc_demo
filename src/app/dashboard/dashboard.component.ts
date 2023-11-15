@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { StatusComponent } from '../dashboard/status/status.component';
 import { CancelJobDialogComponent } from './cancel-job-dialog/cancel-job-dialog.component';
 import { TestAddnewJobComponent } from './test-addnew-job/test-addnew-job.component';
+import { UpadteStatusComponent } from './upadte-status/upadte-status.component';
 
 interface JobData {
   dpcno: number;
@@ -170,17 +171,16 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  openCancelJobDialog(dpcno: number): void {
-    const dialogRef = this.dialogFrom.open(CancelJobDialogComponent, {
-      width: '500px',
-      data: { dpcno: dpcno },
+  onCancel(dpcno: number): void {
+    const jobData = this.data.find((item) => item.dpcno === dpcno);
+
+    const dialogRef = this.dialogFrom.open(UpadteStatusComponent, {
+      data: {
+        jobData: jobData,
+      },
     });
-  
+
     dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        // result คือข้อมูลที่กรอกเหตุผลจาก dialog
-        // this.onStatusCancel(dpcno, result);
-      }
     });
   }
 

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { HttpService } from 'src/app/__service/http.service';
+import { JobUpdateService } from 'src/app/__service/job-update.service';
 
 @Component({
   selector: 'app-invoice',
@@ -8,7 +9,10 @@ import { HttpService } from 'src/app/__service/http.service';
   styleUrls: ['./invoice.component.scss'],
 })
 export class InvoiceComponent implements OnInit {
-  constructor(private http: HttpService) {}
+  constructor(
+    private http: HttpService,
+    private jobUpdateService: JobUpdateService
+  ) {}
 
   @Output() controls = new EventEmitter();
   @Input() jobData: any;

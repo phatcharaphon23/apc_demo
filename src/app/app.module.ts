@@ -41,6 +41,7 @@ import { InvoiceComponent } from './dashboard/invoice/invoice.component';
 import { PrintPageComponent } from './dashboard/print-page/print-page.component';
 import { StatusComponent } from './dashboard/status/status.component';
 import { CancelJobDialogComponent } from './dashboard/cancel-job-dialog/cancel-job-dialog.component';
+import { UpadteStatusComponent } from './dashboard/upadte-status/upadte-status.component';
 
 
 @NgModule({
@@ -57,6 +58,7 @@ import { CancelJobDialogComponent } from './dashboard/cancel-job-dialog/cancel-j
     PrintPageComponent,
     StatusComponent,
     CancelJobDialogComponent,
+    UpadteStatusComponent,
 
   ],
   imports: [
