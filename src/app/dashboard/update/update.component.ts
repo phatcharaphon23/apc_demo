@@ -33,7 +33,10 @@ export class UpdateComponent implements OnInit {
   selectedGroup: string = '';
   finish: boolean = true;
   complete: boolean = true;
-  color: ThemePalette = 'primary';
+
+  isUrgentAW: boolean = false;
+  isUrgentFilm: boolean = false;
+  isUrgentNormal: boolean = false;
   today: moment.Moment = moment();
 
   @Input() jobData: any;
@@ -86,12 +89,16 @@ export class UpdateComponent implements OnInit {
     const today = moment();
     const jobtypeControl = this.form.get('jobtype');
     const quantityControl = this.form.get('quantity');
+
+    this.isUrgentAW = this.form.get('urgent_aw')?.value === 'Y';
+    this.isUrgentFilm = this.form.get('urgent_film')?.value === 'Y';
+    this.isUrgentNormal = this.form.get('urgent_normal')?.value === 'Y';
+
     this.form.get('due_date')?.valueChanges.subscribe((dueDate) => {
       const workingDate = moment(this.form.get('working_date')?.value);
-  
+
       if (moment(dueDate).isBefore(workingDate)) {
         console.log('Due Date must be on or after Working Date');
-
       }
     });
     if (this.data && this.data.jobData) {
@@ -210,6 +217,8 @@ export class UpdateComponent implements OnInit {
   //     this.selectedGroup = group;
   //   }
   // }
+
+  // TODO Inside your component class
   onCheckboxChange(event: any, controlName: string) {
     const isChecked = event.checked;
     const control = this.form.get(controlName);
@@ -217,25 +226,38 @@ export class UpdateComponent implements OnInit {
     if (control) {
       control.setValue(isChecked ? 'Y' : 'N');
     }
+  
+    switch (controlName) {
+      case 'urgent_aw':
+        this.isUrgentAW = isChecked;
+        break;
+      case 'urgent_film':
+        this.isUrgentFilm = isChecked;
+        break;
+      case 'urgent_normal':
+        this.isUrgentNormal = isChecked;
+        break;
+    }
   }
   
 
+  // TODO condition isBefore date
   dueDateHint: string = '';
   onDueDateInput(event: MatDatepickerInputEvent<Date>) {
     const workingDate = this.form.get('working_date')?.value;
     const dueDate = event.value;
-  
+
     if (moment(dueDate).isBefore(workingDate)) {
       this.dueDateHint = 'Due date cannot be before working date';
     } else {
       this.dueDateHint = '';
     }
   }
-  
+
   onWorkingDateInput(event: MatDatepickerInputEvent<Date>) {
     const workingDate = event.value;
     const dueDate = this.form.get('due_date')?.value;
-  
+
     if (moment(dueDate).isBefore(workingDate)) {
       this.dueDateHint = 'Due date cannot be before working date';
     } else {
@@ -255,10 +277,10 @@ export class UpdateComponent implements OnInit {
     );
     const dueDate = this.form.get('due_date')?.value;
     const workingDate = this.form.get('working_date')?.value;
-  
+
     if (moment(dueDate).isBefore(workingDate)) {
       console.log('Due Date must be on or after Working Date');
-      this.submitted = false; 
+      this.submitted = false;
       return;
     }
     if (moment(workingDate).isAfter(dueDate)) {
@@ -276,9 +298,9 @@ export class UpdateComponent implements OnInit {
 
     // const operator_id =
     //   this.selectedOperator || this.form.get('operator_id')?.value;
-    const urgent_aw = this.form.get('urgent_aw')?.value;
-    const urgent_film = this.form.get('urgent_film')?.value;
-    const urgent_normal = this.form.get('urgent_normal')?.value;
+    const urgent_aw = this.isUrgentAW ? 'Y' : 'N';
+    const urgent_film = this.isUrgentFilm ? 'Y' : 'N';
+    const urgent_normal = this.isUrgentNormal ? 'Y' : 'N';
     const design = this.form.get('design')?.value;
     const compos_aw = this.form.get('compos_aw')?.value;
     const ready_aw = this.form.get('ready_aw')?.value;

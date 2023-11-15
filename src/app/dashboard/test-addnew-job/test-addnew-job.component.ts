@@ -77,7 +77,7 @@ export class TestAddnewJobComponent {
     const today = new Date();
   }
 
-  // Inside your component class
+  // TODO Inside your component class
   onCheckboxChange(event: any, controlName: string) {
     const isChecked = event.checked;
 
@@ -91,7 +91,7 @@ export class TestAddnewJobComponent {
       case 'urgent_normal':
         this.isUrgentNormal = isChecked;
         break;
-      // เพิ่ม case ตามความต้องการ
+
     }
   }
 

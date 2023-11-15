@@ -89,7 +89,7 @@ export class DashboardComponent implements OnInit {
     this.http
       .POST('/api/list', body)
       .then((response: any) => {
-        // console.log(response);
+        console.log(response);
         this.data = response.info;
         this.pages = response.pages;
         this.page = response.page;

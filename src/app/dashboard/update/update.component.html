@@ -195,21 +195,26 @@
             </h4>
             <p>
               <mat-checkbox
-                formControlName="urgent_normal"
-                (change)="onCheckboxChange($event, 'urgent_normal')"
-                >Normal</mat-checkbox
-              >
-            </p>
-            <p>
-              <mat-checkbox formControlName="urgent_aw"
-              (change)="onCheckboxChange($event, 'urgent_aw')"
+                formControlName="urgent_aw"
+                (change)="onCheckboxChange($event, 'urgent_aw')"
+                [checked]="isUrgentAW"
                 >Urgent A/W</mat-checkbox
               >
             </p>
             <p>
-              <mat-checkbox formControlName="urgent_film"
-              (change)="onCheckboxChange($event, 'urgent_film')"
+              <mat-checkbox
+                formControlName="urgent_film"
+                (change)="onCheckboxChange($event, 'urgent_film')"
+                [checked]="isUrgentFilm"
                 >Urgent FILM</mat-checkbox
+              >
+            </p>
+            <p>
+              <mat-checkbox
+                formControlName="urgent_normal"
+                (change)="onCheckboxChange($event, 'urgent_normal')"
+                [checked]="isUrgentNormal"
+                >Normal</mat-checkbox
               >
             </p>
           </section>
