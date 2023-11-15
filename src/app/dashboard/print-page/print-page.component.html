@@ -82,7 +82,7 @@
       <div class="col">
         <input
           type="checkbox"
-          [checked]="jobData?.urgent_aw === true"
+          [checked]="jobData?.urgent_aw === 'Y'"
           disabled
         />
         <label for="urgent_aw"
@@ -93,7 +93,7 @@
       <div class="col">
         <input
           type="checkbox"
-          [checked]="jobData?.urgent_film === true"
+          [checked]="jobData?.urgent_film === 'Y'"
           disabled
         />
         <label for="urgent_film"
@@ -104,7 +104,7 @@
       <div class="col">
         <input
           type="checkbox"
-          [checked]="jobData?.urgent_normal === true"
+          [checked]="jobData?.urgent_normal === 'Y'"
           disabled
         />
         <label for="urgent_normal"
@@ -114,7 +114,7 @@
       <div class="col">
         <input
           type="checkbox"
-          [checked]="jobData?.cancel_by === true"
+          [checked]="jobData?.cancel_by === 'cancel'"
           disabled
         />
         <label for="cancel_by"
@@ -140,5 +140,4 @@
       <p>OPID :</p>
     </div>
   </div>
-
 </div>

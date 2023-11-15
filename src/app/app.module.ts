@@ -32,11 +32,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSortModule } from '@angular/material/sort';
-import { MatSort } from '@angular/material/sort';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatChipsModule} from '@angular/material/chips';
-
-
 
 import { FormsModule } from '@angular/forms';
 import { DialogAnimationsComponent } from './dashboard/dialog-animations/dialog-animations.component';
@@ -44,6 +41,7 @@ import { InvoiceComponent } from './dashboard/invoice/invoice.component';
 import { PrintPageComponent } from './dashboard/print-page/print-page.component';
 import { StatusComponent } from './dashboard/status/status.component';
 import { CancelJobDialogComponent } from './dashboard/cancel-job-dialog/cancel-job-dialog.component';
+
 
 @NgModule({
   declarations: [
@@ -59,6 +57,7 @@ import { CancelJobDialogComponent } from './dashboard/cancel-job-dialog/cancel-j
     PrintPageComponent,
     StatusComponent,
     CancelJobDialogComponent,
+
   ],
   imports: [
     BrowserModule,

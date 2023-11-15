@@ -166,14 +166,16 @@
               >
             </p>
             <p>
-              <mat-checkbox formControlName="urgent_aw"
-              (change)="onCheckboxChange($event, 'urgent_aw')"
+              <mat-checkbox
+                formControlName="urgent_aw"
+                (change)="onCheckboxChange($event, 'urgent_aw')"
                 >Urgent A/W</mat-checkbox
               >
             </p>
             <p>
-              <mat-checkbox formControlName="urgent_film"
-              (change)="onCheckboxChange($event, 'urgent_film')"
+              <mat-checkbox
+                formControlName="urgent_film"
+                (change)="onCheckboxChange($event, 'urgent_film')"
                 >Urgent FILM</mat-checkbox
               >
             </p>
@@ -185,34 +187,43 @@
               Job type:
             </h4>
             <mat-radio-group formControlName="jobtype">
-              <p>
-                <mat-radio-button
-                  class="example-radio-button"
-                  value="design"
-                  (click)="selectjobType('design')"
-                  >Design Quantity</mat-radio-button
-                >
-                <input
-                  *ngIf="form.get('jobtype')?.value === 'design'"
-                  formControlName="quantity"
-                />
-              </p>
-              <p>
-                <mat-radio-button
-                  class="example-radio-button"
-                  value="compos_aw"
-                  (click)="selectjobType('compos_aw')"
-                  >Composing A/W</mat-radio-button
-                >
-              </p>
-              <p>
-                <mat-radio-button
-                  class="example-radio-button"
-                  value="ready_aw"
-                  (click)="selectjobType('ready_aw')"
-                  >Ready Made A/W</mat-radio-button
-                >
-              </p>
+              <div>
+                <mat-radio-group formControlName="jobtype">
+                  <div>
+                    <mat-radio-button
+                      class="example-radio-button"
+                      value="design"
+                      (click)="selectjobType('design')"
+                      >Design Quantity</mat-radio-button
+                    >
+                    <input
+                      *ngIf="form.get('jobtype')?.value === 'design'"
+                      matInput
+                      formControlName="quantity"
+                    />
+                    <div *ngIf="form.get('quantity')?.hasError('pattern')">
+                      The quantity should contain only numbers and not zero.
+                    </div>
+                  </div>
+
+                  <p>
+                    <mat-radio-button
+                      class="example-radio-button"
+                      value="compos_aw"
+                      (click)="selectjobType('compos_aw')"
+                      >Composing A/W</mat-radio-button
+                    >
+                  </p>
+                  <p>
+                    <mat-radio-button
+                      class="example-radio-button"
+                      value="ready_aw"
+                      (click)="selectjobType('ready_aw')"
+                      >Ready Made A/W</mat-radio-button
+                    >
+                  </p>
+                </mat-radio-group>
+              </div>
             </mat-radio-group>
           </section>
         </div>

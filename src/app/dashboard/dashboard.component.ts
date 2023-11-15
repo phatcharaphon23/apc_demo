@@ -3,13 +3,14 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { HttpService } from './../__service/http.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
-import { TestAddnewJobComponent } from './test-addnew-job/test-addnew-job.component';
+// import { TestAddnewJobComponent } from './test-addnew-job/test-addnew-job.component';
 import { UpdateComponent } from './update/update.component';
 import { JobUpdateService } from '../__service/job-update.service';
 import { PrintPageComponent } from './print-page/print-page.component';
 import { Router } from '@angular/router';
 import { StatusComponent } from '../dashboard/status/status.component';
 import { CancelJobDialogComponent } from './cancel-job-dialog/cancel-job-dialog.component';
+import { TestAddnewJobComponent } from './test-addnew-job/test-addnew-job.component';
 
 interface JobData {
   dpcno: number;
@@ -157,7 +158,7 @@ export class DashboardComponent implements OnInit {
   }
   onEditJob(dpcno: number) {
     const jobData = this.data.find((item) => item.dpcno === dpcno);
-    // console.log('jobData to be sent:', jobData);
+    console.log('jobData to be sent:', jobData);
     const dialogRef = this.dialogFrom.open(UpdateComponent, {
       data: {
         jobData: jobData,

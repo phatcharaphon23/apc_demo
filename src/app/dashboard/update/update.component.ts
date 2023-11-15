@@ -37,6 +37,7 @@ export class UpdateComponent implements OnInit {
   isUrgentAW: boolean = false;
   isUrgentFilm: boolean = false;
   isUrgentNormal: boolean = false;
+
   today: moment.Moment = moment();
 
   @Input() jobData: any;
@@ -51,6 +52,11 @@ export class UpdateComponent implements OnInit {
 
     private http: HttpService
   ) {}
+
+  private setCheckedValue(value: string): string {
+    return value === 'Y' ? 'Y' : '';
+  }
+  
 
   form = new FormGroup({
     dpcno: new FormControl('', [Validators.minLength(1)]),
@@ -86,21 +92,24 @@ export class UpdateComponent implements OnInit {
     // this.getOperate();
     // this.getRequestby();
     // this.getGroup();
+
     const today = moment();
     const jobtypeControl = this.form.get('jobtype');
     const quantityControl = this.form.get('quantity');
 
-    this.isUrgentAW = this.form.get('urgent_aw')?.value === 'Y';
-    this.isUrgentFilm = this.form.get('urgent_film')?.value === 'Y';
-    this.isUrgentNormal = this.form.get('urgent_normal')?.value === 'Y';
+    this.isUrgentAW = this.data.jobData.urgent_aw === 'Y';
+    this.isUrgentFilm = this.data.jobData.urgent_film === 'Y';
+    this.isUrgentNormal = this.data.jobData.urgent_normal === 'Y';
+    
+    // const urgentAWValue = this.form.get('urgent_aw')?.value;
+    // const urgentFilmValue = this.form.get('urgent_film')?.value;
+    // const urgentNormalValue = this.form.get('urgent_normal')?.value;
 
-    this.form.get('due_date')?.valueChanges.subscribe((dueDate) => {
-      const workingDate = moment(this.form.get('working_date')?.value);
+    // ตั้งค่า isUrgentAW, isUrgentFilm, และ isUrgentNormal ตามค่าที่ได้
+    // this.isUrgentAW = urgentAWValue === 'Y';
+    // this.isUrgentFilm = urgentFilmValue === 'Y';
+    // this.isUrgentNormal = urgentNormalValue === 'Y';
 
-      if (moment(dueDate).isBefore(workingDate)) {
-        console.log('Due Date must be on or after Working Date');
-      }
-    });
     if (this.data && this.data.jobData) {
       this.form.get('jobtype')?.valueChanges.subscribe((value) => {
         this.form.get('design')?.setValue(value === 'design' ? 'Y' : 'N');
@@ -118,10 +127,9 @@ export class UpdateComponent implements OnInit {
         createdby: this.data.jobData.createdby,
         // requestby: this.data.jobData.requestby,
         // operator_id: this.data.jobData.operator_id,
-        urgent_aw: this.data.jobData.urgent_aw,
-        urgent_film: this.data.jobData.urgent_film,
-        urgent_normal: this.data.jobData.urgent_normal,
-        design: this.data.jobData.design,
+        urgent_aw: this.data.jobData.urgent_aw === 'Y' ? 'Y' : '',
+        urgent_film: this.data.jobData.urgent_film === 'Y' ? 'Y' : '',
+        urgent_normal: this.data.jobData.urgent_normal === 'Y' ? 'Y' : '',
         compos_aw: this.data.jobData.compos_aw,
         ready_aw: this.data.jobData.ready_aw,
         finish: this.data.jobData.finish,
@@ -138,6 +146,7 @@ export class UpdateComponent implements OnInit {
     }
     if (this.data.jobData.design === 'Y') {
       jobtypeControl?.setValue('design');
+      quantityControl?.enable(); //เพิ่ม enable
     } else if (this.data.jobData.ready_aw === 'Y') {
       jobtypeControl?.setValue('ready_aw');
     } else if (this.data.jobData.compos_aw === 'Y') {
@@ -153,8 +162,18 @@ export class UpdateComponent implements OnInit {
         quantityControl?.enable();
       } else {
         quantityControl?.disable();
+        quantityControl?.reset();
       }
     });
+    // this.form.get('quantity')?.valueChanges.subscribe((value) => {
+    //   if (value) {
+    //     // ถ้ามีค่าให้ enable
+    //     quantityControl?.enable();
+    //   } else {
+    //     // ถ้าไม่มีค่าให้ disable
+    //     quantityControl?.disable();
+    //   }
+    // });
     // console.log('UpdateComponent', this.jobData);
   }
 
@@ -224,7 +243,8 @@ export class UpdateComponent implements OnInit {
     const control = this.form.get(controlName);
   
     if (control) {
-      control.setValue(isChecked ? 'Y' : 'N');
+      control.patchValue(isChecked);
+      this.form.updateValueAndValidity(); // อัพเดทค่าจาก FormGroup
     }
   
     switch (controlName) {
@@ -301,6 +321,9 @@ export class UpdateComponent implements OnInit {
     const urgent_aw = this.isUrgentAW ? 'Y' : 'N';
     const urgent_film = this.isUrgentFilm ? 'Y' : 'N';
     const urgent_normal = this.isUrgentNormal ? 'Y' : 'N';
+    //    const urgent_aw = this.form.get('urgent_aw')?.value;
+    // const urgent_film = this.form.get('urgent_film')?.value;
+    // const urgent_normal = this.form.get('urgent_normal')?.value;
     const design = this.form.get('design')?.value;
     const compos_aw = this.form.get('compos_aw')?.value;
     const ready_aw = this.form.get('ready_aw')?.value;

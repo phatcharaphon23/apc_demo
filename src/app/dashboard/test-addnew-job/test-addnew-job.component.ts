@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   FormControl,
   FormGroup,
+  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
@@ -67,7 +69,10 @@ export class TestAddnewJobComponent {
     customer_name: new FormControl('', [Validators.required]),
     productname: new FormControl('', [Validators.required]),
     jobtype: new FormControl('', [Validators.required]),
-    quantity: new FormControl({ value: '', disabled: true }),
+    quantity: new FormControl({ value: '', disabled: true }, [
+      Validators.required,
+      Validators.pattern('^[1-9]+$') 
+    ])
   });
 
   ngOnInit(): void {
@@ -75,6 +80,15 @@ export class TestAddnewJobComponent {
     // this.getRequestby();
     // this.getGroup();
     const today = new Date();
+  }
+
+  private numericValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const isNumeric = /^[1-9]\d*$/.test(control.value);
+      const isNotZero = control.value !== '0'; 
+  
+      return isNumeric && isNotZero ? null : { numeric: { value: control.value } };
+    };
   }
 
   // TODO Inside your component class
@@ -91,7 +105,6 @@ export class TestAddnewJobComponent {
       case 'urgent_normal':
         this.isUrgentNormal = isChecked;
         break;
-
     }
   }
 
